@@ -1,0 +1,88 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "gcode",
+      "camelcase": "Gcode",
+      "title": "G-code",
+      "scope": "source.gcode",
+      "file-types": [
+        "ply",
+        "sub",
+        "g",
+        "tap",
+        "ncd",
+        "gcode",
+        "eia",
+        "tcn",
+        "fgc",
+        "gp",
+        "knc",
+        "ssb",
+        "dnc",
+        "ncf",
+        "xpi",
+        "lib",
+        "min",
+        "nci",
+        "fnc",
+        "spf",
+        "cnc",
+        "din",
+        "g00",
+        "mmg",
+        "ecs",
+        "gcd",
+        "m",
+        "mpt",
+        "ncg",
+        "ncp",
+        "sbp",
+        "anc",
+        "aptcl",
+        "mpf",
+        "hnc",
+        "ngc",
+        "prg",
+        "pim",
+        "apt",
+        "001",
+        "cls",
+        "fan",
+        "plt",
+        "pu1",
+        "pit",
+        "rol",
+        "S",
+        "gc",
+        "out"
+      ],
+      "injection-regex": "^gcode$",
+      "class-name": "TreeSitterGcode"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.1",
+    "license": "MIT",
+    "description": "G-code grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "ChocolateNao",
+        "email": "andrey12q112@gmail.com",
+        "url": "https://choconao.me/"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/ChocolateNao/tree-sitter-gcode.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
