@@ -3,8 +3,389 @@
   "name": "gcode",
   "rules": {
     "source_file": {
-      "type": "STRING",
-      "value": "hello"
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_statement"
+      }
+    },
+    "_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "row"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "o_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "empty_line"
+        }
+      ]
+    },
+    "comment": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\)]*"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "PATTERN",
+              "value": ".*"
+            }
+          ]
+        }
+      ]
+    },
+    "row": {
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "line_number"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "word"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
+        ]
+      }
+    },
+    "line_number": {
+      "type": "PATTERN",
+      "value": "[nN]\\d+"
+    },
+    "non_negative_number": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "."
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "\\d+"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            }
+          ]
+        }
+      ]
+    },
+    "number": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "non_negative_number"
+          }
+        ]
+      },
+      "named": false,
+      "value": "number"
+    },
+    "non_negative_integer": {
+      "type": "PATTERN",
+      "value": "\\d+"
+    },
+    "integer": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "non_negative_integer"
+          }
+        ]
+      },
+      "named": false,
+      "value": "integer"
+    },
+    "word": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "g_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "m_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "t_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "s_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "f_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "axis_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "other_word"
+        }
+      ]
+    },
+    "g_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[gG]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "m_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[mM]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "t_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[tT]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "non_negative_integer"
+        }
+      ]
+    },
+    "s_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[sS]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "non_negative_integer"
+        }
+      ]
+    },
+    "f_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[fF]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "axis_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[xXyYzZaAbBcCuUvVwW]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "parameter_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[pP#]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "integer"
+        }
+      ]
+    },
+    "other_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[dDhHiIjJkKlLqQrR]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "o_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[oO]\\d+"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "comment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\r?\\n"
+        }
+      ]
+    },
+    "empty_line": {
+      "type": "PATTERN",
+      "value": "\\r?\\n"
     }
   },
   "extras": [
