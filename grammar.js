@@ -14,25 +14,31 @@ module.exports = grammar({
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
-      choice($.row, $.comment, $.o_word, $.empty_line),
+      choice($.line, $.eol_comment, $.o_word, $.empty_line),
 
-    comment: ($) =>
-      choice(seq('(', /[^\)]*/, ')'), seq(';', /.*/)),
+    inline_comment: ($) => seq('(', /[^\)]*/, ')'),
 
-    row: ($) =>
+    eol_comment: ($) =>
+      alias(
+        prec(2, choice($.inline_comment, seq(';', /.*/))),
+        'eol_comment',
+      ),
+
+    line: ($) =>
       prec(
         2,
         seq(
           optional($.line_number),
-          repeat1($.word),
-          optional($.comment),
+          repeat1(choice($.word, $.inline_comment)),
+          optional($.checksum),
+          optional($.eol_comment),
           /\r?\n/,
         ),
       ),
 
-    line_number: ($) => /[nN]\d+/,
+    line_number: ($) => seq(/[nN]/, $.unsigned_integer),
 
-    non_negative_number: ($) =>
+    unsigned_number: ($) =>
       choice(
         seq(/\d+/, optional(seq('.', /\d+/))),
         seq('.', /\d+/),
@@ -40,14 +46,14 @@ module.exports = grammar({
 
     number: ($) =>
       alias(
-        seq(optional('-'), $.non_negative_number),
+        seq(optional('-'), $.unsigned_number),
         'number',
       ),
 
-    non_negative_integer: ($) => /\d+/,
+    unsigned_integer: ($) => /\d+/,
     integer: ($) =>
       alias(
-        seq(optional('-'), $.non_negative_integer),
+        seq(optional('-'), $.unsigned_integer),
         'integer',
       ),
 
@@ -67,16 +73,26 @@ module.exports = grammar({
     m_word: ($) => seq(/[mM]/, $.number),
 
     // gcode errors when a negative value is used with these words
-    t_word: ($) => seq(/[tT]/, $.non_negative_integer),
-    s_word: ($) => seq(/[sS]/, $.non_negative_integer),
+    t_word: ($) => seq(/[tT]/, $.unsigned_integer),
+    s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
     f_word: ($) => seq(/[fF]/, $.number),
-    axis_word: ($) => seq(/[xXyYzZaAbBcCuUvVwW]/, $.number),
+    axis_word: ($) =>
+      seq(/[xXyYzZaAbBcCuUvVwWeE]/, $.number),
     parameter_word: ($) => seq(/[pP#]/, $.integer),
-    other_word: ($) => seq(/[dDhHiIjJkKlLqQrR]/, $.number),
+    other_word: ($) =>
+      seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
 
+    // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
     o_word: ($) =>
-      seq(/[oO]\d+/, optional($.comment), /\r?\n/),
+      seq(
+        /[oO]/,
+        $.number,
+        optional($.eol_comment),
+        $.empty_line,
+      ),
+
+    checksum: ($) => seq('*', $.number),
 
     empty_line: ($) => /\r?\n/,
   },

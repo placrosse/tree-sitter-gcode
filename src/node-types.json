@@ -15,13 +15,28 @@
     }
   },
   {
-    "type": "comment",
+    "type": "checksum",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "empty_line",
     "named": true,
+    "fields": {}
+  },
+  {
+    "type": "eol_comment",
+    "named": false,
     "fields": {}
   },
   {
@@ -55,9 +70,60 @@
     }
   },
   {
+    "type": "inline_comment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "integer",
     "named": false,
     "fields": {}
+  },
+  {
+    "type": "line",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "checksum",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "inline_comment",
+          "named": true
+        },
+        {
+          "type": "line_number",
+          "named": true
+        },
+        {
+          "type": "word",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "line_number",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "unsigned_integer",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "m_word",
@@ -75,11 +141,6 @@
     }
   },
   {
-    "type": "non_negative_integer",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "number",
     "named": false,
     "fields": {}
@@ -89,11 +150,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "empty_line",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "number",
           "named": true
         }
       ]
@@ -105,7 +174,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "number",
@@ -130,29 +199,6 @@
     }
   },
   {
-    "type": "row",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "line_number",
-          "named": true
-        },
-        {
-          "type": "word",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "s_word",
     "named": true,
     "fields": {},
@@ -161,7 +207,7 @@
       "required": true,
       "types": [
         {
-          "type": "non_negative_integer",
+          "type": "unsigned_integer",
           "named": true
         }
       ]
@@ -177,19 +223,19 @@
       "required": false,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "empty_line",
           "named": true
         },
         {
-          "type": "o_word",
+          "type": "eol_comment",
           "named": true
         },
         {
-          "type": "row",
+          "type": "line",
+          "named": true
+        },
+        {
+          "type": "o_word",
           "named": true
         }
       ]
@@ -204,11 +250,16 @@
       "required": true,
       "types": [
         {
-          "type": "non_negative_integer",
+          "type": "unsigned_integer",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "unsigned_integer",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "word",
@@ -262,20 +313,20 @@
     "named": false
   },
   {
+    "type": "*",
+    "named": false
+  },
+  {
     "type": ".",
     "named": false
   },
   {
-    "type": ";",
+    "type": "eol_comment",
     "named": false
   },
   {
     "type": "integer",
     "named": false
-  },
-  {
-    "type": "line_number",
-    "named": true
   },
   {
     "type": "number",

@@ -14,11 +14,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "row"
+          "name": "line"
         },
         {
           "type": "SYMBOL",
-          "name": "comment"
+          "name": "eol_comment"
         },
         {
           "type": "SYMBOL",
@@ -30,42 +30,55 @@
         }
       ]
     },
-    "comment": {
-      "type": "CHOICE",
+    "inline_comment": {
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "PATTERN",
-              "value": "[^\\)]*"
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            }
-          ]
+          "type": "STRING",
+          "value": "("
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ";"
-            },
-            {
-              "type": "PATTERN",
-              "value": ".*"
-            }
-          ]
+          "type": "PATTERN",
+          "value": "[^\\)]*"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
-    "row": {
+    "eol_comment": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "inline_comment"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ";"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": ".*"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "named": false,
+      "value": "eol_comment"
+    },
+    "line": {
       "type": "PREC",
       "value": 2,
       "content": {
@@ -86,8 +99,17 @@
           {
             "type": "REPEAT1",
             "content": {
-              "type": "SYMBOL",
-              "name": "word"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "word"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "inline_comment"
+                }
+              ]
             }
           },
           {
@@ -95,7 +117,19 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "comment"
+                "name": "checksum"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "eol_comment"
               },
               {
                 "type": "BLANK"
@@ -110,10 +144,19 @@
       }
     },
     "line_number": {
-      "type": "PATTERN",
-      "value": "[nN]\\d+"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[nN]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unsigned_integer"
+        }
+      ]
     },
-    "non_negative_number": {
+    "unsigned_number": {
       "type": "CHOICE",
       "members": [
         {
@@ -180,14 +223,14 @@
           },
           {
             "type": "SYMBOL",
-            "name": "non_negative_number"
+            "name": "unsigned_number"
           }
         ]
       },
       "named": false,
       "value": "number"
     },
-    "non_negative_integer": {
+    "unsigned_integer": {
       "type": "PATTERN",
       "value": "\\d+"
     },
@@ -210,7 +253,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "non_negative_integer"
+            "name": "unsigned_integer"
           }
         ]
       },
@@ -289,7 +332,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "non_negative_integer"
+          "name": "unsigned_integer"
         }
       ]
     },
@@ -302,7 +345,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "non_negative_integer"
+          "name": "unsigned_integer"
         }
       ]
     },
@@ -324,7 +367,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "[xXyYzZaAbBcCuUvVwW]"
+          "value": "[xXyYzZaAbBcCuUvVwWeE]"
         },
         {
           "type": "SYMBOL",
@@ -353,8 +396,16 @@
           "value": "[dDhHiIjJkKlLqQrR]"
         },
         {
-          "type": "SYMBOL",
-          "name": "number"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "number"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -363,14 +414,18 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "[oO]\\d+"
+          "value": "[oO]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
         },
         {
           "type": "CHOICE",
           "members": [
             {
               "type": "SYMBOL",
-              "name": "comment"
+              "name": "eol_comment"
             },
             {
               "type": "BLANK"
@@ -378,8 +433,21 @@
           ]
         },
         {
-          "type": "PATTERN",
-          "value": "\\r?\\n"
+          "type": "SYMBOL",
+          "name": "empty_line"
+        }
+      ]
+    },
+    "checksum": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
         }
       ]
     },
