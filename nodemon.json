@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "watch": "grammar.js",
+  "exec": "echo 'grammar.js changed - generating parser'",
+  "events": {
+    "restart": "tree-sitter generate"
+  },
+  "ext": "js",
+  "delay": "1000"
+}

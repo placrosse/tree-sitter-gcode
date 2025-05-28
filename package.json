@@ -32,7 +32,11 @@
     "node-gyp-build": "^4.8.2"
   },
   "devDependencies": {
+    "eslint": "^9.27.0",
+    "eslint-config-treesitter": "^1.0.2",
+    "nodemon": "^3.1.10",
     "prebuildify": "^6.0.1",
+    "prettier": "^3.5.3",
     "tree-sitter-cli": "^0.25.4"
   },
   "peerDependencies": {
@@ -47,6 +51,9 @@
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
+    "test": "node --test bindings/node/*_test.js",
+    "dev": "nodemon",
+    "lint": "prettier ./grammar.js --check && eslint ./grammar.js",
+    "lint:fix": "prettier ./grammar.js --write && npm run lint -- --fix"
   }
 }
