@@ -70,6 +70,32 @@
     }
   },
   {
+    "type": "indexed_axis_word",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "unsigned_integer",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "inline_comment",
     "named": true,
     "fields": {}
@@ -282,6 +308,10 @@
           "named": true
         },
         {
+          "type": "indexed_axis_word",
+          "named": true
+        },
+        {
           "type": "m_word",
           "named": true
         },
@@ -318,6 +348,10 @@
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "=",
     "named": false
   },
   {

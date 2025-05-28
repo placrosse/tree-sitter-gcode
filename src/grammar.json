@@ -289,6 +289,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "indexed_axis_word"
+        },
+        {
+          "type": "SYMBOL",
           "name": "parameter_word"
         },
         {
@@ -323,6 +327,19 @@
         }
       ]
     },
+    "f_word": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[fF]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
     "t_word": {
       "type": "SEQ",
       "members": [
@@ -349,12 +366,12 @@
         }
       ]
     },
-    "f_word": {
+    "axis_word": {
       "type": "SEQ",
       "members": [
         {
           "type": "PATTERN",
-          "value": "[fF]"
+          "value": "[xXyYzZaAbBcCuUvVwWeE]"
         },
         {
           "type": "SYMBOL",
@@ -362,12 +379,24 @@
         }
       ]
     },
-    "axis_word": {
+    "indexed_axis_word": {
       "type": "SEQ",
       "members": [
         {
           "type": "PATTERN",
           "value": "[xXyYzZaAbBcCuUvVwWeE]"
+        },
+        {
+          "type": "FIELD",
+          "name": "index",
+          "content": {
+            "type": "SYMBOL",
+            "name": "unsigned_integer"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
         },
         {
           "type": "SYMBOL",

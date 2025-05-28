@@ -65,20 +65,29 @@ module.exports = grammar({
         $.s_word,
         $.f_word,
         $.axis_word,
+        $.indexed_axis_word,
         $.parameter_word,
         $.other_word,
       ),
 
     g_word: ($) => seq(/[gG]/, $.number),
     m_word: ($) => seq(/[mM]/, $.number),
+    f_word: ($) => seq(/[fF]/, $.number),
 
     // gcode errors when a negative value is used with these words
     t_word: ($) => seq(/[tT]/, $.unsigned_integer),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
-    f_word: ($) => seq(/[fF]/, $.number),
     axis_word: ($) =>
       seq(/[xXyYzZaAbBcCuUvVwWeE]/, $.number),
+    indexed_axis_word: ($) =>
+      seq(
+        /[xXyYzZaAbBcCuUvVwWeE]/,
+        field('index', $.unsigned_integer),
+        '=',
+        $.number,
+      ),
+
     parameter_word: ($) => seq(/[pP#]/, $.integer),
     other_word: ($) =>
       seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
