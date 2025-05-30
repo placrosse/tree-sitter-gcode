@@ -9,6 +9,8 @@
       "file-types": [
         "ply",
         "sub",
+        "gco",
+        "bfb",
         "g",
         "tap",
         "nc",
