@@ -4,9 +4,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "axis_identifier",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -85,9 +89,13 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "axis_identifier",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -353,6 +361,10 @@
   {
     "type": "=",
     "named": false
+  },
+  {
+    "type": "axis_identifier",
+    "named": true
   },
   {
     "type": "eol_comment",

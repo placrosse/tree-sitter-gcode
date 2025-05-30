@@ -201,6 +201,19 @@
               "value": "\\d+"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            }
+          ]
         }
       ]
     },
@@ -366,12 +379,16 @@
         }
       ]
     },
+    "axis_identifier": {
+      "type": "PATTERN",
+      "value": "[xXyYzZaAbBcCuUvVwWeE]"
+    },
     "axis_word": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[xXyYzZaAbBcCuUvVwWeE]"
+          "type": "SYMBOL",
+          "name": "axis_identifier"
         },
         {
           "type": "SYMBOL",
@@ -383,8 +400,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[xXyYzZaAbBcCuUvVwWeE]"
+          "type": "SYMBOL",
+          "name": "axis_identifier"
         },
         {
           "type": "FIELD",

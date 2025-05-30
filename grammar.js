@@ -42,6 +42,7 @@ module.exports = grammar({
       choice(
         seq(/\d+/, optional(seq('.', /\d+/))),
         seq('.', /\d+/),
+        seq(/\d+/, '.'),
       ),
 
     number: ($) =>
@@ -78,11 +79,11 @@ module.exports = grammar({
     t_word: ($) => seq(/[tT]/, $.unsigned_integer),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
-    axis_word: ($) =>
-      seq(/[xXyYzZaAbBcCuUvVwWeE]/, $.number),
+    axis_identifier: ($) => /[xXyYzZaAbBcCuUvVwWeE]/,
+    axis_word: ($) => seq($.axis_identifier, $.number),
     indexed_axis_word: ($) =>
       seq(
-        /[xXyYzZaAbBcCuUvVwWeE]/,
+        $.axis_identifier,
         field('index', $.unsigned_integer),
         '=',
         $.number,
