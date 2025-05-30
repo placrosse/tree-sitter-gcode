@@ -354,15 +354,24 @@
       ]
     },
     "t_word": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[tT]"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[tT]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unsigned_integer"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "unsigned_integer"
+          "type": "PATTERN",
+          "value": "[tT][?cxCX]"
         }
       ]
     },

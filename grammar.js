@@ -76,7 +76,11 @@ module.exports = grammar({
     f_word: ($) => seq(/[fF]/, $.number),
 
     // gcode errors when a negative value is used with these words
-    t_word: ($) => seq(/[tT]/, $.unsigned_integer),
+    t_word: ($) =>
+      choice(
+        seq(/[tT]/, $.unsigned_integer),
+        /[tT][?cxCX]/,
+      ),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
     axis_identifier: ($) => /[xXyYzZaAbBcCuUvVwWeE]/,
