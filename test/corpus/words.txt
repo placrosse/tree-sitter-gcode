@@ -1,0 +1,170 @@
+==================
+Words
+==================
+G1 F1500
+G1 X50 Y25.3 E22.
+T0
+G92 E0
+G28 P1
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (f_word
+        (number))))
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number))))
+  (line
+    (word
+      (t_word
+        (unsigned_integer))))
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number))))
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (parameter_word
+        (integer)))))
+
+==================
+Line number
+==================
+N1 T0
+N2 G92
+N3 G28
+
+---
+
+(source_file
+  (line
+    (line_number
+      (unsigned_integer))
+    (word
+      (t_word
+        (unsigned_integer))))
+  (line
+    (line_number
+      (unsigned_integer))
+    (word
+      (g_word
+        (number))))
+  (line
+    (line_number
+      (unsigned_integer))
+    (word
+      (g_word
+        (number)))))
+
+==================
+Indexed axes
+==================
+G1 X1=50 Y1=25.3 E1=22.
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (indexed_axis_word
+        (axis_identifier)
+        (unsigned_integer)
+        (number)))
+    (word
+      (indexed_axis_word
+        (axis_identifier)
+        (unsigned_integer)
+        (number)))
+    (word
+      (indexed_axis_word
+        (axis_identifier)
+        (unsigned_integer)
+        (number)))))
+
+==================
+Checksum
+==================
+G92 E0 *67
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))
+    (checksum
+      (number))))
+
+==================
+Checksum with comment
+==================
+G92 E0 *67 ; Test
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))
+    (checksum
+      (number))
+    (eol_comment)))
+
+==================
+Checksum errors if not at line end
+:error
+==================
+G92 *67 E0
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+      (checksum
+        (number))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))))

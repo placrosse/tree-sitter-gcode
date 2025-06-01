@@ -1,0 +1,76 @@
+==================
+EOL comments (semicolon)
+==================
+T0 ; I am a comment
+; Test empty line
+G92
+; And I am too! ; Test
+G28 ; Test ; Test
+
+---
+
+(source_file
+  (line
+    (word
+      (t_word
+        (unsigned_integer)))
+    (eol_comment))
+  (eol_comment)
+  (empty_line)
+  (line
+    (word
+      (g_word
+        (number))))
+  (eol_comment)
+  (empty_line)
+  (line
+    (word
+      (g_word
+        (number)))
+    (eol_comment)))
+
+==================
+EOL comments (parentheses)
+==================
+T0 (I am a comment)
+(I am too)
+G28 (Test) (Test)
+
+---
+
+(source_file
+  (line
+    (word
+      (t_word
+        (unsigned_integer)))
+    (eol_comment))
+  (eol_comment)
+  (empty_line)
+  (line
+    (word
+      (g_word
+        (number)))
+    (inline_comment)
+    (eol_comment)))
+
+==================
+Inline comments
+==================
+N4 G92 (Test) (Test) E0 (Test)
+
+---
+
+(source_file
+  (line
+    (line_number
+      (unsigned_integer))
+    (word
+      (g_word
+        (number)))
+    (inline_comment)
+    (inline_comment)
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))
+    (eol_comment)))
