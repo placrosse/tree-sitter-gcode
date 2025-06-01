@@ -21,6 +21,20 @@ module.exports = grammar({
         $.empty_line,
       ),
 
+    extras: ($) => choice($.eol_comment, $.inline_comment),
+
+    empty_line: ($) =>
+      seq(
+        optional($._horizontal_whitespace),
+        $._eol_or_eof,
+      ),
+
+    _horizontal_whitespace: (_) => /[ \t]+/,
+    _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
+    _end_of_file: (_) => token('/$(?!.|\n)/'),
+    _eol_or_eof: ($) =>
+      choice($._end_of_file, $._end_of_line),
+
     inline_comment: ($) => seq('(', /[^\)]*/, ')'),
 
     eol_comment: ($) =>
@@ -40,7 +54,7 @@ module.exports = grammar({
 
     line_number: ($) => seq(/[nN]/, $.unsigned_integer),
 
-    unsigned_number: ($) =>
+    unsigned_number: (_) =>
       choice(
         seq(/\d+/, optional(seq('.', /\d+/))),
         seq('.', /\d+/),
@@ -53,7 +67,7 @@ module.exports = grammar({
         'number',
       ),
 
-    unsigned_integer: ($) => /\d+/,
+    unsigned_integer: (_) => /\d+/,
     integer: ($) =>
       alias(
         seq(optional('-'), $.unsigned_integer),
@@ -86,7 +100,7 @@ module.exports = grammar({
       ),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
-    axis_identifier: ($) => /[xXyYzZaAbBcCuUvVwWeE]/,
+    axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     axis_word: ($) =>
       seq(
         $.axis_identifier,
@@ -125,6 +139,7 @@ module.exports = grammar({
         $.number,
         $.unary_expression,
         $.binary_expression,
+        $.parameter_word,
       ),
 
     binary_expression: ($) =>
@@ -173,18 +188,6 @@ module.exports = grammar({
       ),
 
     checksum: ($) => seq('*', $.number),
-
-    empty_line: ($) =>
-      seq(
-        optional($._horizontal_whitespace),
-        $._eol_or_eof,
-      ),
-
-    _horizontal_whitespace: (_) => /[ \t]+/,
-    _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
-    _end_of_file: (_) => token('/$(?!.|\n)/'),
-    _eol_or_eof: ($) =>
-      choice($._end_of_file, $._end_of_line),
   },
 });
 

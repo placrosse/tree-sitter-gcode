@@ -26,6 +26,84 @@
         }
       ]
     },
+    "extras": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "eol_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "inline_comment"
+        }
+      ]
+    },
+    "empty_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_horizontal_whitespace"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol_or_eof"
+        }
+      ]
+    },
+    "_horizontal_whitespace": {
+      "type": "PATTERN",
+      "value": "[ \\t]+"
+    },
+    "_end_of_line": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "\n"
+          },
+          {
+            "type": "STRING",
+            "value": "\r\n"
+          },
+          {
+            "type": "STRING",
+            "value": "\r"
+          }
+        ]
+      }
+    },
+    "_end_of_file": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "/$(?!.|\n)/"
+      }
+    },
+    "_eol_or_eof": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_file"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_line"
+        }
+      ]
+    },
     "inline_comment": {
       "type": "SEQ",
       "members": [
@@ -534,6 +612,10 @@
         {
           "type": "SYMBOL",
           "name": "binary_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter_word"
         }
       ]
     },
@@ -841,71 +923,6 @@
         {
           "type": "SYMBOL",
           "name": "number"
-        }
-      ]
-    },
-    "empty_line": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_horizontal_whitespace"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_eol_or_eof"
-        }
-      ]
-    },
-    "_horizontal_whitespace": {
-      "type": "PATTERN",
-      "value": "[ \\t]+"
-    },
-    "_end_of_line": {
-      "type": "TOKEN",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "\n"
-          },
-          {
-            "type": "STRING",
-            "value": "\r\n"
-          },
-          {
-            "type": "STRING",
-            "value": "\r"
-          }
-        ]
-      }
-    },
-    "_end_of_file": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "/$(?!.|\n)/"
-      }
-    },
-    "_eol_or_eof": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_end_of_file"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_end_of_line"
         }
       ]
     }

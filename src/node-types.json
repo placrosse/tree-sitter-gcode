@@ -20,6 +20,10 @@
           "named": true
         },
         {
+          "type": "parameter_word",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -67,6 +71,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         },
         {
@@ -378,6 +386,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         },
         {
