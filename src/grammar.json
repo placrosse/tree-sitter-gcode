@@ -3,10 +3,66 @@
   "name": "gcode",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_start_marker"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_statement"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_end_marker"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
+    },
+    "_start_marker": {
+      "type": "TOKEN",
       "content": {
-        "type": "SYMBOL",
-        "name": "_statement"
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "%"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\n"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "_end_marker": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "%"
       }
     },
     "_statement": {
@@ -18,24 +74,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "eol_comment"
+          "name": "unsigned_integer"
         },
-        {
-          "type": "SYMBOL",
-          "name": "empty_line"
-        }
-      ]
-    },
-    "extras": {
-      "type": "CHOICE",
-      "members": [
         {
           "type": "SYMBOL",
           "name": "eol_comment"
         },
         {
           "type": "SYMBOL",
-          "name": "inline_comment"
+          "name": "empty_line"
         }
       ]
     },

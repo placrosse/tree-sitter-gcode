@@ -1,0 +1,67 @@
+==================
+Basic expression (single operand)
+==================
+X[1+1]
+
+---
+
+(source_file
+  (line
+    (word
+      (axis_word
+        (axis_identifier)
+        (expression
+          (binary_expression
+            (number)
+            (number)))))))
+
+==================
+Basic expression (multiple operands)
+==================
+Y[1+1-1*1**2]
+
+---
+
+(source_file
+  (line
+    (word
+      (axis_word
+        (axis_identifier)
+        (expression
+          (binary_expression
+            (binary_expression
+              (number)
+              (number))
+            (binary_expression
+              (number)
+              (binary_expression
+                (number)
+                (number)))))))))
+
+==================
+Complex expression
+==================
+Y[1+ACOS[0]-[#3**[4.0/2]]]
+
+---
+
+(source_file
+  (line
+    (word
+      (axis_word
+        (axis_identifier)
+        (expression
+          (binary_expression
+            (number)
+            (unary_expression
+              (binary_expression
+                (expression
+                  (number))
+                (expression
+                  (binary_expression
+                    (parameter_word
+                      (integer))
+                    (expression
+                      (binary_expression
+                        (number)
+                        (number)))))))))))))

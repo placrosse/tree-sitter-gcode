@@ -16,9 +16,9 @@
 - [x] Both inline and end-of-line comments (some G-code flavors support both)
 - [x] Indexed axes words (as specified in [ISO 6983-1](https://www.iso.org/standard/34608.html))
 - [x] [Checksums](https://reprap.org/wiki/G-code#.2A:_Checksum)
-- [ ] G-code expressions (specified in [RS274NGC](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=823374))
+- [x] G-code expressions (specified in [RS274NGC](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=823374))
 - [ ] M98 and M99 G-Code subprograms
-- [ ] G-code subroutines (O-codes in [LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
+- [ ] G-code subroutines (extended O-codes in [LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
 
 ## Status
 

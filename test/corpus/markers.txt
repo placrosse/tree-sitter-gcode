@@ -1,0 +1,29 @@
+==================
+Markers
+==================
+%
+G90
+%
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))))
+
+==================
+Error on marker miss
+==================
+%
+G90
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number))))
+  (MISSING "%"))

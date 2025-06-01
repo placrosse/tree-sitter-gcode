@@ -349,6 +349,10 @@
         {
           "type": "line",
           "named": true
+        },
+        {
+          "type": "unsigned_integer",
+          "named": true
         }
       ]
     }
@@ -450,6 +454,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "%",
+    "named": false
   },
   {
     "type": "(",

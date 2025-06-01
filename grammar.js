@@ -10,18 +10,29 @@
 module.exports = grammar({
   name: 'gcode',
 
+  // extras: ($) => [$.inline_comment],
+
   rules: {
-    source_file: ($) => repeat($._statement),
+    source_file: ($) =>
+      choice(
+        seq(
+          $._start_marker,
+          repeat($._statement),
+          $._end_marker,
+        ),
+        repeat($._statement),
+      ),
+
+    _start_marker: (_) => token(seq('%', optional('\n'))),
+    _end_marker: (_) => token('%'),
 
     _statement: ($) =>
       choice(
         $.line,
+        $.unsigned_integer,
         $.eol_comment,
-        // $.o_word,
         $.empty_line,
       ),
-
-    extras: ($) => choice($.eol_comment, $.inline_comment),
 
     empty_line: ($) =>
       seq(
