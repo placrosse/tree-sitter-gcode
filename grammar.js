@@ -119,7 +119,13 @@ module.exports = grammar({
         ']',
       ),
 
-    _operand: ($) => choice($.expression, $.number, $.unary_expression, $.binary_expression),
+    _operand: ($) =>
+      choice(
+        $.expression,
+        $.number,
+        $.unary_expression,
+        $.binary_expression,
+      ),
 
     binary_expression: ($) =>
       choice(
@@ -177,7 +183,8 @@ module.exports = grammar({
     _horizontal_whitespace: (_) => /[ \t]+/,
     _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
     _end_of_file: (_) => token('/$(?!.|\n)/'),
-    _eol_or_eof: ($) => token(choice($._end_of_file, $._end_of_line)),
+    _eol_or_eof: ($) =>
+      choice($._end_of_file, $._end_of_line),
   },
 });
 

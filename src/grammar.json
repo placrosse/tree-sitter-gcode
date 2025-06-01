@@ -75,69 +75,65 @@
       "value": "eol_comment"
     },
     "line": {
-      "type": "PREC",
-      "value": 2,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "line_number"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "REPEAT1",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "word"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "inline_comment"
-                }
-              ]
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "line_number"
+            },
+            {
+              "type": "BLANK"
             }
-          },
-          {
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
             "type": "CHOICE",
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "checksum"
+                "name": "word"
               },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "CHOICE",
-            "members": [
               {
                 "type": "SYMBOL",
-                "name": "eol_comment"
-              },
-              {
-                "type": "BLANK"
+                "name": "inline_comment"
               }
             ]
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_eol_or_eof"
           }
-        ]
-      }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "checksum"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "eol_comment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol_or_eof"
+        }
+      ]
     },
     "line_number": {
       "type": "SEQ",
@@ -530,6 +526,14 @@
         {
           "type": "SYMBOL",
           "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unary_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binary_expression"
         }
       ]
     },
@@ -789,7 +793,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression"
+          "name": "_operand"
         }
       ]
     },
@@ -802,7 +806,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression"
+          "name": "_operand"
         },
         {
           "type": "STRING",
@@ -810,7 +814,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression"
+          "name": "_operand"
         }
       ]
     },
