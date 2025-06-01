@@ -30,15 +30,12 @@ module.exports = grammar({
       ),
 
     line: ($) =>
-      prec(
-        2,
-        seq(
-          optional($.line_number),
-          repeat1(choice($.word, $.inline_comment)),
-          optional($.checksum),
-          optional($.eol_comment),
-          $._eol_or_eof,
-        ),
+      seq(
+        optional($.line_number),
+        repeat1(choice($.word, $.inline_comment)),
+        optional($.checksum),
+        optional($.eol_comment),
+        $._eol_or_eof,
       ),
 
     line_number: ($) => seq(/[nN]/, $.unsigned_integer),
@@ -122,7 +119,7 @@ module.exports = grammar({
         ']',
       ),
 
-    _operand: ($) => choice($.expression, $.number),
+    _operand: ($) => choice($.expression, $.number, $.unary_expression, $.binary_expression),
 
     binary_expression: ($) =>
       choice(
@@ -154,11 +151,11 @@ module.exports = grammar({
           'TAN',
           'EXISTS',
         ),
-        $.expression,
+        $._operand,
       ),
 
     atan_expression: ($) =>
-      seq('ATAN', $.expression, '/', $.expression),
+      seq('ATAN', $._operand, '/', $._operand),
 
     // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
     o_word: ($) =>
@@ -180,8 +177,7 @@ module.exports = grammar({
     _horizontal_whitespace: (_) => /[ \t]+/,
     _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
     _end_of_file: (_) => token('/$(?!.|\n)/'),
-    _eol_or_eof: ($) =>
-      choice($._end_of_file, $._end_of_line),
+    _eol_or_eof: ($) => token(choice($._end_of_file, $._end_of_line)),
   },
 });
 
