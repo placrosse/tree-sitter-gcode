@@ -14,7 +14,12 @@ module.exports = grammar({
     source_file: ($) => repeat($._statement),
 
     _statement: ($) =>
-      choice($.line, $.eol_comment, $.o_word, $.empty_line),
+      choice(
+        $.line,
+        $.eol_comment,
+        // $.o_word,
+        $.empty_line,
+      ),
 
     inline_comment: ($) => seq('(', /[^\)]*/, ')'),
 
@@ -32,7 +37,7 @@ module.exports = grammar({
           repeat1(choice($.word, $.inline_comment)),
           optional($.checksum),
           optional($.eol_comment),
-          /\r?\n/,
+          $._eol_or_eof,
         ),
       ),
 
@@ -58,6 +63,7 @@ module.exports = grammar({
         'integer',
       ),
 
+    // Words
     word: ($) =>
       choice(
         $.g_word,
@@ -84,30 +90,106 @@ module.exports = grammar({
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
     axis_identifier: ($) => /[xXyYzZaAbBcCuUvVwWeE]/,
-    axis_word: ($) => seq($.axis_identifier, $.number),
+    axis_word: ($) =>
+      seq(
+        $.axis_identifier,
+        choice($.number, $.expression),
+      ),
     indexed_axis_word: ($) =>
       seq(
         $.axis_identifier,
         field('index', $.unsigned_integer),
         '=',
-        $.number,
+        choice($.number, $.expression),
       ),
 
     parameter_word: ($) => seq(/[pP#]/, $.integer),
     other_word: ($) =>
       seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
 
+    // Expressions
+    expression: ($) =>
+      seq(
+        '[',
+        choice(
+          $.binary_expression,
+          $.unary_expression,
+          $.atan_expression,
+          $.parameter_word,
+          $.expression,
+          $.number,
+        ),
+        ']',
+      ),
+
+    _operand: ($) => choice($.expression, $.number),
+
+    binary_expression: ($) =>
+      choice(
+        prec.left(1, seq($._operand, '+', $._operand)),
+        prec.left(1, seq($._operand, '-', $._operand)),
+        prec.left(2, seq($._operand, '*', $._operand)),
+        prec.left(2, seq($._operand, '/', $._operand)),
+        prec.left(2, seq($._operand, 'MOD', $._operand)),
+        prec.left(3, seq($._operand, '**', $._operand)),
+        prec.left(1, seq($._operand, 'AND', $._operand)),
+        prec.left(1, seq($._operand, 'OR', $._operand)),
+        prec.left(1, seq($._operand, 'XOR', $._operand)),
+      ),
+
+    unary_expression: ($) =>
+      seq(
+        choice(
+          'ABS',
+          'ACOS',
+          'ASIN',
+          'COS',
+          'EXP',
+          'FIX',
+          'FUP',
+          'LN',
+          'ROUND',
+          'SIN',
+          'SQRT',
+          'TAN',
+          'EXISTS',
+        ),
+        $.expression,
+      ),
+
+    atan_expression: ($) =>
+      seq('ATAN', $.expression, '/', $.expression),
+
     // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
     o_word: ($) =>
       seq(
         /[oO]/,
         $.number,
-        optional($.eol_comment),
-        $.empty_line,
+        // optional($.eol_comment),
+        // $.empty_line,
       ),
 
     checksum: ($) => seq('*', $.number),
 
-    empty_line: ($) => /\r?\n/,
+    empty_line: ($) =>
+      seq(
+        optional($._horizontal_whitespace),
+        $._eol_or_eof,
+      ),
+
+    _horizontal_whitespace: (_) => /[ \t]+/,
+    _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
+    _end_of_file: (_) => token('/$(?!.|\n)/'),
+    _eol_or_eof: ($) =>
+      choice($._end_of_file, $._end_of_line),
   },
 });
+
+/**
+ * Makes a rule possibly be separated by a comma to for it to be repeated
+ *
+ * @param {Rule} rule - Rule
+ */
+// function commaSep(rule) {
+//   return seq(rule, repeat(seq(',', rule)));
+// }
