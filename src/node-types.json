@@ -567,11 +567,51 @@
     "named": false
   },
   {
+    "type": "abs",
+    "named": false
+  },
+  {
+    "type": "acos",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "asin",
+    "named": false
+  },
+  {
+    "type": "atan",
+    "named": false
+  },
+  {
     "type": "axis_identifier",
     "named": true
   },
   {
+    "type": "cos",
+    "named": false
+  },
+  {
     "type": "eol_comment",
+    "named": false
+  },
+  {
+    "type": "exists",
+    "named": false
+  },
+  {
+    "type": "exp",
+    "named": false
+  },
+  {
+    "type": "fix",
+    "named": false
+  },
+  {
+    "type": "fup",
     "named": false
   },
   {
@@ -579,7 +619,39 @@
     "named": false
   },
   {
+    "type": "ln",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
     "type": "number",
+    "named": false
+  },
+  {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "round",
+    "named": false
+  },
+  {
+    "type": "sin",
+    "named": false
+  },
+  {
+    "type": "sort",
+    "named": false
+  },
+  {
+    "type": "tan",
+    "named": false
+  },
+  {
+    "type": "xor",
     "named": false
   }
 ]

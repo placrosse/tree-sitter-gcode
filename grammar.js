@@ -139,35 +139,52 @@ module.exports = grammar({
         prec.left(1, seq($._operand, '-', $._operand)),
         prec.left(2, seq($._operand, '*', $._operand)),
         prec.left(2, seq($._operand, '/', $._operand)),
-        prec.left(2, seq($._operand, 'MOD', $._operand)),
+        prec.left(
+          2,
+          seq($._operand, choice('MOD', 'mod'), $._operand),
+        ),
         prec.left(3, seq($._operand, '**', $._operand)),
-        prec.left(1, seq($._operand, 'AND', $._operand)),
-        prec.left(1, seq($._operand, 'OR', $._operand)),
-        prec.left(1, seq($._operand, 'XOR', $._operand)),
+        prec.left(
+          1,
+          seq($._operand, choice('AND', 'and'), $._operand),
+        ),
+        prec.left(
+          1,
+          seq($._operand, choice('OR', 'or'), $._operand),
+        ),
+        prec.left(
+          1,
+          seq($._operand, choice('XOR', 'xor'), $._operand),
+        ),
       ),
 
     unary_expression: ($) =>
       seq(
         choice(
-          'ABS',
-          'ACOS',
-          'ASIN',
-          'COS',
-          'EXP',
-          'FIX',
-          'FUP',
-          'LN',
-          'ROUND',
-          'SIN',
-          'SQRT',
-          'TAN',
-          'EXISTS',
+          choice('ABS', 'abs'),
+          choice('ACOS', 'acos'),
+          choice('ASIN', 'asin'),
+          choice('COS', 'cos'),
+          choice('EXP', 'exp'),
+          choice('FIX', 'fix'),
+          choice('FUP', 'fup'),
+          choice('LN', 'ln'),
+          choice('ROUND', 'round'),
+          choice('SIN', 'sin'),
+          choice('SQRT', 'sort'),
+          choice('TAN', 'tan'),
+          choice('EXISTS', 'exists'),
         ),
         $._operand,
       ),
 
     atan_expression: ($) =>
-      seq('ATAN', $._operand, '/', $._operand),
+      seq(
+        choice('ATAN', 'atan'),
+        $._operand,
+        '/',
+        $._operand,
+      ),
 
     // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
     o_word: ($) =>
