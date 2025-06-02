@@ -100,11 +100,6 @@
     }
   },
   {
-    "type": "empty_line",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "eol_comment",
     "named": false,
     "fields": {}
@@ -339,10 +334,6 @@
       "required": false,
       "types": [
         {
-          "type": "empty_line",
-          "named": true
-        },
-        {
           "type": "eol_comment",
           "named": true
         },
@@ -489,10 +480,6 @@
   },
   {
     "type": "/",
-    "named": false
-  },
-  {
-    "type": "/$(?!.|\n)/",
     "named": false
   },
   {

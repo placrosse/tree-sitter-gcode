@@ -16,13 +16,11 @@ G28 ; Test ; Test
         (unsigned_integer)))
     (eol_comment))
   (eol_comment)
-  (empty_line)
   (line
     (word
       (g_word
         (number))))
   (eol_comment)
-  (empty_line)
   (line
     (word
       (g_word
@@ -44,8 +42,8 @@ G28 (Test) (Test)
       (t_word
         (unsigned_integer)))
     (eol_comment))
-  (eol_comment)
-  (empty_line)
+  (line
+    (inline_comment))
   (line
     (word
       (g_word

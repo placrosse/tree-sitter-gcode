@@ -10,43 +10,23 @@
 module.exports = grammar({
   name: 'gcode',
 
-  // extras: ($) => [$.inline_comment],
+  extras: (_) => [/\s/],
 
   rules: {
     source_file: ($) =>
       choice(
-        seq(
-          $._start_marker,
-          repeat($._statement),
-          $._end_marker,
-        ),
+        seq($._marker, repeat($._statement), $._marker),
         repeat($._statement),
       ),
 
-    _start_marker: (_) => token(seq('%', optional('\n'))),
-    _end_marker: (_) => token('%'),
+    _marker: (_) => token('%'),
 
     _statement: ($) =>
-      choice(
-        $.line,
-        $.unsigned_integer,
-        $.eol_comment,
-        $.empty_line,
-      ),
+      choice($.line, $.unsigned_integer, $.eol_comment),
 
-    empty_line: ($) =>
-      seq(
-        optional($._horizontal_whitespace),
-        $._eol_or_eof,
-      ),
+    _end_of_line: (_) => token(choice(/\n/, /\r\n/, /\r/)),
 
-    _horizontal_whitespace: (_) => /[ \t]+/,
-    _end_of_line: (_) => token(choice('\n', '\r\n', '\r')),
-    _end_of_file: (_) => token('/$(?!.|\n)/'),
-    _eol_or_eof: ($) =>
-      choice($._end_of_file, $._end_of_line),
-
-    inline_comment: ($) => seq('(', /[^\)]*/, ')'),
+    inline_comment: (_) => seq('(', /[^\)]*/, ')'),
 
     eol_comment: ($) =>
       alias(
@@ -60,7 +40,7 @@ module.exports = grammar({
         repeat1(choice($.word, $.inline_comment)),
         optional($.checksum),
         optional($.eol_comment),
-        $._eol_or_eof,
+        $._end_of_line,
       ),
 
     line_number: ($) => seq(/[nN]/, $.unsigned_integer),
