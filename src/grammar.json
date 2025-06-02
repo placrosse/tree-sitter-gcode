@@ -358,6 +358,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "polar_distance"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "polar_angle"
+        },
+        {
+          "type": "SYMBOL",
           "name": "other_word"
         }
       ]
@@ -433,6 +441,32 @@
         {
           "type": "SYMBOL",
           "name": "unsigned_integer"
+        }
+      ]
+    },
+    "polar_distance": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "@"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "polar_angle": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\\^"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
         }
       ]
     },

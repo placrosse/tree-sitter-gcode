@@ -77,6 +77,8 @@ module.exports = grammar({
         $.indexed_axis_word,
         $.parameter_word,
         $.parameter_variable,
+        $.polar_distance,
+        $.polar_angle,
         $.other_word,
       ),
 
@@ -91,6 +93,9 @@ module.exports = grammar({
         /[tT][?cxCX]/,
       ),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
+
+    polar_distance: ($) => seq(/@/, $.number),
+    polar_angle: ($) => seq(/\^/, $.number),
 
     axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     axis_word: ($) =>

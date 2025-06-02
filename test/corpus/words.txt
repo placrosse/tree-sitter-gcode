@@ -182,3 +182,22 @@ Parameter variable
       (parameter_variable
         (unsigned_integer)
         (number)))))
+
+==================
+Polar coordinates
+==================
+G91 @.5 ^90
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (polar_distance
+        (number)))
+    (word
+      (polar_angle
+        (number)))))
