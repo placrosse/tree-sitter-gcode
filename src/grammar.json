@@ -354,6 +354,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "parameter_variable"
+        },
+        {
+          "type": "SYMBOL",
           "name": "other_word"
         }
       ]
@@ -502,6 +506,31 @@
         {
           "type": "SYMBOL",
           "name": "integer"
+        }
+      ]
+    },
+    "parameter_variable": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[pP#]"
+        },
+        {
+          "type": "FIELD",
+          "name": "index",
+          "content": {
+            "type": "SYMBOL",
+            "name": "unsigned_integer"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
         }
       ]
     },

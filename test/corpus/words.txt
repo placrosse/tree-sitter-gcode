@@ -168,3 +168,17 @@ G92 *67 E0
       (axis_word
         (axis_identifier)
         (number)))))
+
+==================
+Parameter variable
+==================
+#101=1.2
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_variable
+        (unsigned_integer)
+        (number)))))

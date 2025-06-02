@@ -76,6 +76,7 @@ module.exports = grammar({
         $.axis_word,
         $.indexed_axis_word,
         $.parameter_word,
+        $.parameter_variable,
         $.other_word,
       ),
 
@@ -106,6 +107,14 @@ module.exports = grammar({
       ),
 
     parameter_word: ($) => seq(/[pP#]/, $.integer),
+    parameter_variable: ($) =>
+      seq(
+        /[pP#]/,
+        field('index', $.unsigned_integer),
+        '=',
+        $.number,
+      ),
+
     other_word: ($) =>
       seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
 
