@@ -111,10 +111,12 @@ module.exports = grammar({
         choice($.number, $.expression),
       ),
 
-    parameter_word: ($) => seq(/[pP#]/, $.integer),
+    parameter_identifier: (_) => /[pP#]/,
+    parameter_word: ($) =>
+      seq($.parameter_identifier, $.integer),
     parameter_variable: ($) =>
       seq(
-        /[pP#]/,
+        $.parameter_identifier,
         field('index', $.unsigned_integer),
         '=',
         $.number,

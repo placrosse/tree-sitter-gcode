@@ -310,11 +310,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_identifier",
           "named": true
         }
       ]
@@ -325,11 +329,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "parameter_identifier",
           "named": true
         }
       ]
@@ -701,6 +709,10 @@
   {
     "type": "or",
     "named": false
+  },
+  {
+    "type": "parameter_identifier",
+    "named": true
   },
   {
     "type": "round",

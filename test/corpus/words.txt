@@ -51,6 +51,7 @@ G28 P1
         (number)))
     (word
       (parameter_word
+        (parameter_identifier)
         (integer)))))
 
 ==================
@@ -162,8 +163,8 @@ G92 *67 E0
     (word
       (g_word
         (number)))
-      (checksum
-        (number))
+    (checksum
+      (number))
     (word
       (axis_word
         (axis_identifier)
@@ -180,6 +181,7 @@ Parameter variable
   (line
     (word
       (parameter_variable
+        (parameter_identifier)
         (unsigned_integer)
         (number)))))
 

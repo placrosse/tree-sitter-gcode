@@ -60,6 +60,7 @@ Y[1+ACOS[0]-[#3**[4.0/2]]]
                 (expression
                   (binary_expression
                     (parameter_word
+                      (parameter_identifier)
                       (integer))
                     (expression
                       (binary_expression

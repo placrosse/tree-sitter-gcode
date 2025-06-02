@@ -530,12 +530,16 @@
         }
       ]
     },
+    "parameter_identifier": {
+      "type": "PATTERN",
+      "value": "[pP#]"
+    },
     "parameter_word": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[pP#]"
+          "type": "SYMBOL",
+          "name": "parameter_identifier"
         },
         {
           "type": "SYMBOL",
@@ -547,8 +551,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[pP#]"
+          "type": "SYMBOL",
+          "name": "parameter_identifier"
         },
         {
           "type": "FIELD",
