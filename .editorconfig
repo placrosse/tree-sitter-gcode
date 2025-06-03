@@ -10,7 +10,7 @@ indent_size = 2
 [*.js]
 indent_style = space
 indent_size = 2
-max_line_length = 60
+max_line_length = 80
 
 [*.scm]
 indent_style = space

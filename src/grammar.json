@@ -409,6 +409,10 @@
         }
       ]
     },
+    "t_marlin_special": {
+      "type": "PATTERN",
+      "value": "[tT][?cxCX]"
+    },
     "t_word": {
       "type": "CHOICE",
       "members": [
@@ -426,8 +430,8 @@
           ]
         },
         {
-          "type": "PATTERN",
-          "value": "[tT][?cxCX]"
+          "type": "SYMBOL",
+          "name": "t_marlin_special"
         }
       ]
     },

@@ -21,18 +21,14 @@ module.exports = grammar({
 
     _marker: (_) => token('%'),
 
-    _statement: ($) =>
-      choice($.line, $.unsigned_integer, $.eol_comment),
+    _statement: ($) => choice($.line, $.unsigned_integer, $.eol_comment),
 
     _end_of_line: (_) => token(choice(/\n/, /\r\n/, /\r/)),
 
     inline_comment: (_) => seq('(', /[^\)]*/, ')'),
 
     eol_comment: ($) =>
-      alias(
-        prec(2, choice($.inline_comment, seq(';', /.*/))),
-        'eol_comment',
-      ),
+      alias(prec(2, choice($.inline_comment, seq(';', /.*/))), 'eol_comment'),
 
     line: ($) =>
       seq(
@@ -52,18 +48,10 @@ module.exports = grammar({
         seq(/\d+/, '.'),
       ),
 
-    number: ($) =>
-      alias(
-        seq(optional('-'), $.unsigned_number),
-        'number',
-      ),
+    number: ($) => alias(seq(optional('-'), $.unsigned_number), 'number'),
 
     unsigned_integer: (_) => /\d+/,
-    integer: ($) =>
-      alias(
-        seq(optional('-'), $.unsigned_integer),
-        'integer',
-      ),
+    integer: ($) => alias(seq(optional('-'), $.unsigned_integer), 'integer'),
 
     // Words
     word: ($) =>
@@ -86,23 +74,17 @@ module.exports = grammar({
     m_word: ($) => seq(/[mM]/, $.number),
     f_word: ($) => seq(/[fF]/, $.number),
 
-    // gcode errors when a negative value is used with these words
-    t_word: ($) =>
-      choice(
-        seq(/[tT]/, $.unsigned_integer),
-        /[tT][?cxCX]/,
-      ),
+    t_marlin_special: (_) => /[tT][?cxCX]/,
+
+    // gcode errors when a negative integer value is used with these words
+    t_word: ($) => choice(seq(/[tT]/, $.unsigned_integer), $.t_marlin_special),
     s_word: ($) => seq(/[sS]/, $.unsigned_integer),
 
     polar_distance: ($) => seq(/@/, $.number),
     polar_angle: ($) => seq(/\^/, $.number),
 
     axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
-    axis_word: ($) =>
-      seq(
-        $.axis_identifier,
-        choice($.number, $.expression),
-      ),
+    axis_word: ($) => seq($.axis_identifier, choice($.number, $.expression)),
     indexed_axis_word: ($) =>
       seq(
         $.axis_identifier,
@@ -112,8 +94,7 @@ module.exports = grammar({
       ),
 
     parameter_identifier: (_) => /[pP#]/,
-    parameter_word: ($) =>
-      seq($.parameter_identifier, $.integer),
+    parameter_word: ($) => seq($.parameter_identifier, $.integer),
     parameter_variable: ($) =>
       seq(
         $.parameter_identifier,
@@ -122,8 +103,7 @@ module.exports = grammar({
         $.number,
       ),
 
-    other_word: ($) =>
-      seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
+    other_word: ($) => seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
 
     // Expressions
     expression: ($) =>
@@ -155,23 +135,11 @@ module.exports = grammar({
         prec.left(1, seq($._operand, '-', $._operand)),
         prec.left(2, seq($._operand, '*', $._operand)),
         prec.left(2, seq($._operand, '/', $._operand)),
-        prec.left(
-          2,
-          seq($._operand, choice('MOD', 'mod'), $._operand),
-        ),
+        prec.left(2, seq($._operand, choice('MOD', 'mod'), $._operand)),
         prec.left(3, seq($._operand, '**', $._operand)),
-        prec.left(
-          1,
-          seq($._operand, choice('AND', 'and'), $._operand),
-        ),
-        prec.left(
-          1,
-          seq($._operand, choice('OR', 'or'), $._operand),
-        ),
-        prec.left(
-          1,
-          seq($._operand, choice('XOR', 'xor'), $._operand),
-        ),
+        prec.left(1, seq($._operand, choice('AND', 'and'), $._operand)),
+        prec.left(1, seq($._operand, choice('OR', 'or'), $._operand)),
+        prec.left(1, seq($._operand, choice('XOR', 'xor'), $._operand)),
       ),
 
     unary_expression: ($) =>
@@ -195,12 +163,7 @@ module.exports = grammar({
       ),
 
     atan_expression: ($) =>
-      seq(
-        choice('ATAN', 'atan'),
-        $._operand,
-        '/',
-        $._operand,
-      ),
+      seq(choice('ATAN', 'atan'), $._operand, '/', $._operand),
 
     // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
     o_word: ($) =>

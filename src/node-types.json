@@ -418,8 +418,12 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "t_marlin_special",
+          "named": true
+        },
         {
           "type": "unsigned_integer",
           "named": true
@@ -725,6 +729,10 @@
   {
     "type": "sort",
     "named": false
+  },
+  {
+    "type": "t_marlin_special",
+    "named": true
   },
   {
     "type": "tan",
