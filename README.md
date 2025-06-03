@@ -17,8 +17,9 @@
 - [x] Indexed axes words (as specified in [ISO 6983-1](https://www.iso.org/standard/34608.html))
 - [x] [Checksums](https://reprap.org/wiki/G-code#.2A:_Checksum)
 - [x] G-code expressions (specified in [RS274NGC](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=823374))
+- [x] Named parameters (check [named paramters for LinuxCNC](https://linuxcnc.org/docs/html/gcode/overview.html#gcode:named-parameters))
 - [x] M98 and M99 G-Code subprograms with parameter variables (check [cnccookbook](https://www.cnccookbook.com/m98-m99-g-code-cnc-subprograms/))
-- [ ] G-code subroutines (extended O-codes in [LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
+- [ ] G-code subroutines (extended [O-codes in LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
 
 ## Status
 
