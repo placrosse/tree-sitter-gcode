@@ -70,18 +70,18 @@ module.exports = grammar({
         $.other_word,
       ),
 
-    g_word: ($) => seq(/[gG]/, $.number),
-    m_word: ($) => seq(/[mM]/, $.number),
-    f_word: ($) => seq(/[fF]/, $.number),
+    g_word: ($) => seq(/[gG]/, choice($.number, $.expression)),
+    m_word: ($) => seq(/[mM]/, choice($.number, $.expression)),
+    f_word: ($) => seq(/[fF]/, choice($.number, $.expression)),
 
     t_marlin_special: (_) => /[tT][?cxCX]/,
 
     // gcode errors when a negative integer value is used with these words
     t_word: ($) => choice(seq(/[tT]/, $.unsigned_integer), $.t_marlin_special),
-    s_word: ($) => seq(/[sS]/, $.unsigned_integer),
+    s_word: ($) => seq(/[sS]/, choice($.unsigned_integer, $.expression)),
 
-    polar_distance: ($) => seq(/@/, $.number),
-    polar_angle: ($) => seq(/\^/, $.number),
+    polar_distance: ($) => seq(/@/, choice($.number, $.expression)),
+    polar_angle: ($) => seq(/\^/, choice($.number, $.expression)),
 
     axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     axis_word: ($) => seq($.axis_identifier, choice($.number, $.expression)),
@@ -93,17 +93,27 @@ module.exports = grammar({
         choice($.number, $.expression),
       ),
 
+    property_name: (_) => seq('<', /[a-zA-Z0-9_]*/, '>'),
+
     parameter_identifier: (_) => /[pP#]/,
-    parameter_word: ($) => seq($.parameter_identifier, $.integer),
+    parameter_word: ($) =>
+      seq(
+        $.parameter_identifier,
+        choice($.integer, field('parameter_name', $.property_name)),
+      ),
     parameter_variable: ($) =>
       seq(
         $.parameter_identifier,
-        field('index', $.unsigned_integer),
+        choice(
+          field('index', $.unsigned_integer),
+          field('parameter_name', $.property_name),
+        ),
         '=',
-        $.number,
+        choice($.number, $.expression),
       ),
 
-    other_word: ($) => seq(/[dDhHiIjJkKlLqQrR]/, optional($.number)),
+    other_word: ($) =>
+      seq(/[dDhHiIjJkKlLqQrR]/, choice(optional($.number), $.expression)),
 
     // Expressions
     expression: ($) =>
@@ -131,12 +141,18 @@ module.exports = grammar({
 
     binary_expression: ($) =>
       choice(
-        prec.left(1, seq($._operand, '+', $._operand)),
-        prec.left(1, seq($._operand, '-', $._operand)),
-        prec.left(2, seq($._operand, '*', $._operand)),
-        prec.left(2, seq($._operand, '/', $._operand)),
-        prec.left(2, seq($._operand, choice('MOD', 'mod'), $._operand)),
-        prec.left(3, seq($._operand, '**', $._operand)),
+        prec.left(3, seq($._operand, '+', $._operand)),
+        prec.left(3, seq($._operand, '-', $._operand)),
+        prec.left(4, seq($._operand, '*', $._operand)),
+        prec.left(4, seq($._operand, '/', $._operand)),
+        prec.left(4, seq($._operand, choice('MOD', 'mod'), $._operand)),
+        prec.left(5, seq($._operand, '**', $._operand)),
+        prec.left(2, seq($._operand, choice('EQ', 'eq'), $._operand)),
+        prec.left(2, seq($._operand, choice('NE', 'ne'), $._operand)),
+        prec.left(2, seq($._operand, choice('GT', 'gt'), $._operand)),
+        prec.left(2, seq($._operand, choice('GE', 'ge'), $._operand)),
+        prec.left(2, seq($._operand, choice('LT', 'lt'), $._operand)),
+        prec.left(2, seq($._operand, choice('LE', 'le'), $._operand)),
         prec.left(1, seq($._operand, choice('AND', 'and'), $._operand)),
         prec.left(1, seq($._operand, choice('OR', 'or'), $._operand)),
         prec.left(1, seq($._operand, choice('XOR', 'xor'), $._operand)),

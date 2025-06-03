@@ -1,6 +1,7 @@
 ==================
 Words
 ==================
+
 G1 F1500
 G1 X50 Y25.3 E22.
 T0
@@ -57,6 +58,7 @@ G28 P1
 ==================
 Line number
 ==================
+
 N1 T0
 N2 G92
 N3 G28
@@ -86,6 +88,7 @@ N3 G28
 ==================
 Indexed axes
 ==================
+
 G1 X1=50 Y1=25.3 E1=22.
 
 ---
@@ -114,6 +117,7 @@ G1 X1=50 Y1=25.3 E1=22.
 ==================
 Checksum
 ==================
+
 G92 E0 *67
 
 ---
@@ -133,6 +137,7 @@ G92 E0 *67
 ==================
 Checksum with comment
 ==================
+
 G92 E0 *67 ; Test
 
 ---
@@ -154,6 +159,7 @@ G92 E0 *67 ; Test
 Checksum errors if not at line end
 :error
 ==================
+
 G92 *67 E0
 
 ---
@@ -171,8 +177,9 @@ G92 *67 E0
         (number)))))
 
 ==================
-Parameter variable
+Parameter variable (number)
 ==================
+
 #101=1.2
 
 ---
@@ -184,6 +191,105 @@ Parameter variable
         (parameter_identifier)
         (unsigned_integer)
         (number)))))
+
+==================
+Parameter variable (expression)
+==================
+
+#101=[1+1]
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_variable
+        (parameter_identifier)
+        (unsigned_integer)
+        (expression
+          (binary_expression
+            (number)
+            (number)))))))
+
+==================
+Parameter variable (expression with parameter reference)
+==================
+
+#101=1
+#101=[#101+1]
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_variable
+        (parameter_identifier)
+        (unsigned_integer)
+        (number))))
+  (line
+    (word
+      (parameter_variable
+        (parameter_identifier)
+        (unsigned_integer)
+        (expression
+          (binary_expression
+            (parameter_word
+              (parameter_identifier)
+              (integer))
+            (number)))))))
+
+==================
+Named parameter
+==================
+
+#<test>
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_word
+        (parameter_identifier)
+        (property_name)))))
+
+==================
+Valued named parameter
+==================
+
+#<test>=1.1
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_variable
+        (parameter_identifier)
+        (property_name)
+        (number)))))
+
+==================
+Valued named parameter referencing another named parameter
+==================
+
+#<_endmill_rad> = [#<_endmill_dia>/2.0]
+
+---
+
+(source_file
+  (line
+    (word
+      (parameter_variable
+        (parameter_identifier)
+        (property_name)
+        (expression
+          (binary_expression
+            (parameter_word
+              (parameter_identifier)
+              (property_name))
+            (number)))))))
 
 ==================
 Polar coordinates

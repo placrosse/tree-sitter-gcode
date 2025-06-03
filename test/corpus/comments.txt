@@ -1,6 +1,7 @@
 ==================
 EOL comments (semicolon)
 ==================
+
 T0 ; I am a comment
 ; Test empty line
 G92
@@ -30,6 +31,7 @@ G28 ; Test ; Test
 ==================
 EOL comments (parentheses)
 ==================
+
 T0 (I am a comment)
 (I am too)
 G28 (Test) (Test)
@@ -54,6 +56,7 @@ G28 (Test) (Test)
 ==================
 Inline comments
 ==================
+
 N4 G92 (Test) (Test) E0 (Test)
 
 ---

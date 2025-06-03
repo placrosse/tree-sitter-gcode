@@ -148,6 +148,10 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
@@ -162,6 +166,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -268,6 +276,10 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
@@ -288,6 +300,10 @@
       "required": false,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
@@ -300,10 +316,20 @@
     "fields": {
       "index": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "unsigned_integer",
+            "named": true
+          }
+        ]
+      },
+      "parameter_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "property_name",
             "named": true
           }
         ]
@@ -313,6 +339,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -327,7 +357,18 @@
   {
     "type": "parameter_word",
     "named": true,
-    "fields": {},
+    "fields": {
+      "parameter_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "property_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -352,6 +393,10 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
@@ -367,11 +412,20 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "property_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "s_word",
@@ -381,6 +435,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
         {
           "type": "unsigned_integer",
           "named": true
@@ -563,7 +621,15 @@
     "named": false
   },
   {
+    "type": "<",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
     "named": false
   },
   {
@@ -591,6 +657,10 @@
     "named": false
   },
   {
+    "type": "EQ",
+    "named": false
+  },
+  {
     "type": "EXISTS",
     "named": false
   },
@@ -607,11 +677,31 @@
     "named": false
   },
   {
+    "type": "GE",
+    "named": false
+  },
+  {
+    "type": "GT",
+    "named": false
+  },
+  {
+    "type": "LE",
+    "named": false
+  },
+  {
     "type": "LN",
     "named": false
   },
   {
+    "type": "LT",
+    "named": false
+  },
+  {
     "type": "MOD",
+    "named": false
+  },
+  {
+    "type": "NE",
     "named": false
   },
   {
@@ -679,6 +769,10 @@
     "named": false
   },
   {
+    "type": "eq",
+    "named": false
+  },
+  {
     "type": "exists",
     "named": false
   },
@@ -695,7 +789,19 @@
     "named": false
   },
   {
+    "type": "ge",
+    "named": false
+  },
+  {
+    "type": "gt",
+    "named": false
+  },
+  {
     "type": "integer",
+    "named": false
+  },
+  {
+    "type": "le",
     "named": false
   },
   {
@@ -703,7 +809,15 @@
     "named": false
   },
   {
+    "type": "lt",
+    "named": false
+  },
+  {
     "type": "mod",
+    "named": false
+  },
+  {
+    "type": "ne",
     "named": false
   },
   {
