@@ -70,20 +70,31 @@ module.exports = grammar({
         $.other_word,
       ),
 
-    g_word: ($) => seq(/[gG]/, choice($.number, $.expression)),
-    m_word: ($) => seq(/[mM]/, choice($.number, $.expression)),
-    f_word: ($) => seq(/[fF]/, choice($.number, $.expression)),
+    _g_word_identifier: (_) => caseInsensitive('g'),
+    _m_word_identifier: (_) => caseInsensitive('m'),
+    _f_word_identifier: (_) => caseInsensitive('f'),
+    _t_word_identifier: (_) => caseInsensitive('t'),
+    _s_word_identifier: (_) => caseInsensitive('s'),
+    _o_word_identifier: (_) => caseInsensitive('o'),
+    _other_word_identifier: (_) => /[dDhHiIjJkKlLqQrR]/,
+    axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
+    parameter_identifier: (_) => /[pP#]/,
+    property_name: (_) => seq('<', /[a-zA-Z0-9_]*/, '>'),
 
-    t_marlin_special: (_) => /[tT][?cxCX]/,
+    g_word: ($) => seq($._g_word_identifier, choice($.number, $.expression)),
+    m_word: ($) => seq($._m_word_identifier, choice($.number, $.expression)),
+    f_word: ($) => seq($._f_word_identifier, choice($.number, $.expression)),
 
+    t_marlin_special: ($) => seq($._t_word_identifier, /[?cxCX]/),
     // gcode errors when a negative integer value is used with these words
-    t_word: ($) => choice(seq(/[tT]/, $.unsigned_integer), $.t_marlin_special),
-    s_word: ($) => seq(/[sS]/, choice($.unsigned_integer, $.expression)),
+    t_word: ($) =>
+      choice(seq($._t_word_identifier, $.unsigned_integer), $.t_marlin_special),
+    s_word: ($) =>
+      seq($._s_word_identifier, choice($.unsigned_integer, $.expression)),
 
     polar_distance: ($) => seq(/@/, choice($.number, $.expression)),
     polar_angle: ($) => seq(/\^/, choice($.number, $.expression)),
 
-    axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     axis_word: ($) => seq($.axis_identifier, choice($.number, $.expression)),
     indexed_axis_word: ($) =>
       seq(
@@ -93,9 +104,6 @@ module.exports = grammar({
         choice($.number, $.expression),
       ),
 
-    property_name: (_) => seq('<', /[a-zA-Z0-9_]*/, '>'),
-
-    parameter_identifier: (_) => /[pP#]/,
     parameter_word: ($) =>
       seq(
         $.parameter_identifier,
@@ -113,7 +121,7 @@ module.exports = grammar({
       ),
 
     other_word: ($) =>
-      seq(/[dDhHiIjJkKlLqQrR]/, choice(optional($.number), $.expression)),
+      seq($._other_word_identifier, choice(optional($.number), $.expression)),
 
     // Expressions
     expression: ($) =>
@@ -145,46 +153,46 @@ module.exports = grammar({
         prec.left(3, seq($._operand, '-', $._operand)),
         prec.left(4, seq($._operand, '*', $._operand)),
         prec.left(4, seq($._operand, '/', $._operand)),
-        prec.left(4, seq($._operand, choice('MOD', 'mod'), $._operand)),
+        prec.left(4, seq($._operand, caseInsensitive('mod'), $._operand)),
         prec.left(5, seq($._operand, '**', $._operand)),
-        prec.left(2, seq($._operand, choice('EQ', 'eq'), $._operand)),
-        prec.left(2, seq($._operand, choice('NE', 'ne'), $._operand)),
-        prec.left(2, seq($._operand, choice('GT', 'gt'), $._operand)),
-        prec.left(2, seq($._operand, choice('GE', 'ge'), $._operand)),
-        prec.left(2, seq($._operand, choice('LT', 'lt'), $._operand)),
-        prec.left(2, seq($._operand, choice('LE', 'le'), $._operand)),
-        prec.left(1, seq($._operand, choice('AND', 'and'), $._operand)),
-        prec.left(1, seq($._operand, choice('OR', 'or'), $._operand)),
-        prec.left(1, seq($._operand, choice('XOR', 'xor'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('eq'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('ne'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('gt'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('ge'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('lt'), $._operand)),
+        prec.left(2, seq($._operand, caseInsensitive('le'), $._operand)),
+        prec.left(1, seq($._operand, caseInsensitive('and'), $._operand)),
+        prec.left(1, seq($._operand, caseInsensitive('or'), $._operand)),
+        prec.left(1, seq($._operand, caseInsensitive('xor'), $._operand)),
       ),
 
     unary_expression: ($) =>
       seq(
         choice(
-          choice('ABS', 'abs'),
-          choice('ACOS', 'acos'),
-          choice('ASIN', 'asin'),
-          choice('COS', 'cos'),
-          choice('EXP', 'exp'),
-          choice('FIX', 'fix'),
-          choice('FUP', 'fup'),
-          choice('LN', 'ln'),
-          choice('ROUND', 'round'),
-          choice('SIN', 'sin'),
-          choice('SQRT', 'sort'),
-          choice('TAN', 'tan'),
-          choice('EXISTS', 'exists'),
+          caseInsensitive('abs'),
+          caseInsensitive('acos'),
+          caseInsensitive('asin'),
+          caseInsensitive('cos'),
+          caseInsensitive('exp'),
+          caseInsensitive('fix'),
+          caseInsensitive('fup'),
+          caseInsensitive('ln'),
+          caseInsensitive('round'),
+          caseInsensitive('sin'),
+          caseInsensitive('sort'),
+          caseInsensitive('tan'),
+          caseInsensitive('exists'),
         ),
         $._operand,
       ),
 
     atan_expression: ($) =>
-      seq(choice('ATAN', 'atan'), $._operand, '/', $._operand),
+      seq(caseInsensitive('atan'), $._operand, '/', $._operand),
 
-    // TODO: better spport for o-words. see https://linuxcnc.org/docs/html/gcode/o-code.html
+    // O-code subroutines
     o_word: ($) =>
       seq(
-        /[oO]/,
+        $._o_word_identifier,
         $.number,
         // optional($.eol_comment),
         // $.empty_line,
@@ -202,3 +210,24 @@ module.exports = grammar({
 // function commaSep(rule) {
 //   return seq(rule, repeat(seq(',', rule)));
 // }
+
+/**
+ * Makes a keyword case insensitive.
+ *
+ * https://github.com/stadelmanma/tree-sitter-fortran/blob/master/grammar.js#L2305
+ *
+ * @param {string} keyword - Keyword
+ * @param {boolean} aliasAsWord - Should function return an AliasRule with alias being the keyword
+ *
+ * @returns {AliasRule|RegExp} description
+ */
+function caseInsensitive(keyword, aliasAsWord = true) {
+  const result = new RegExp(
+    keyword
+      .split('')
+      .map((l) => (l !== l.toUpperCase() ? `[${l}${l.toUpperCase()}]` : l))
+      .join(''),
+  );
+
+  return aliasAsWord ? alias(result, keyword) : result;
+}

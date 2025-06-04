@@ -471,6 +471,11 @@
     }
   },
   {
+    "type": "t_marlin_special",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "t_word",
     "named": true,
     "fields": {},
@@ -633,102 +638,6 @@
     "named": false
   },
   {
-    "type": "ABS",
-    "named": false
-  },
-  {
-    "type": "ACOS",
-    "named": false
-  },
-  {
-    "type": "AND",
-    "named": false
-  },
-  {
-    "type": "ASIN",
-    "named": false
-  },
-  {
-    "type": "ATAN",
-    "named": false
-  },
-  {
-    "type": "COS",
-    "named": false
-  },
-  {
-    "type": "EQ",
-    "named": false
-  },
-  {
-    "type": "EXISTS",
-    "named": false
-  },
-  {
-    "type": "EXP",
-    "named": false
-  },
-  {
-    "type": "FIX",
-    "named": false
-  },
-  {
-    "type": "FUP",
-    "named": false
-  },
-  {
-    "type": "GE",
-    "named": false
-  },
-  {
-    "type": "GT",
-    "named": false
-  },
-  {
-    "type": "LE",
-    "named": false
-  },
-  {
-    "type": "LN",
-    "named": false
-  },
-  {
-    "type": "LT",
-    "named": false
-  },
-  {
-    "type": "MOD",
-    "named": false
-  },
-  {
-    "type": "NE",
-    "named": false
-  },
-  {
-    "type": "OR",
-    "named": false
-  },
-  {
-    "type": "ROUND",
-    "named": false
-  },
-  {
-    "type": "SIN",
-    "named": false
-  },
-  {
-    "type": "SQRT",
-    "named": false
-  },
-  {
-    "type": "TAN",
-    "named": false
-  },
-  {
-    "type": "XOR",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
@@ -781,11 +690,19 @@
     "named": false
   },
   {
+    "type": "f",
+    "named": false
+  },
+  {
     "type": "fix",
     "named": false
   },
   {
     "type": "fup",
+    "named": false
+  },
+  {
+    "type": "g",
     "named": false
   },
   {
@@ -813,6 +730,10 @@
     "named": false
   },
   {
+    "type": "m",
+    "named": false
+  },
+  {
     "type": "mod",
     "named": false
   },
@@ -837,6 +758,10 @@
     "named": false
   },
   {
+    "type": "s",
+    "named": false
+  },
+  {
     "type": "sin",
     "named": false
   },
@@ -845,8 +770,8 @@
     "named": false
   },
   {
-    "type": "t_marlin_special",
-    "named": true
+    "type": "t",
+    "named": false
   },
   {
     "type": "tan",

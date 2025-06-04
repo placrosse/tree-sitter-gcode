@@ -69,3 +69,50 @@ Y[1+ACOS[0]-[#3**[4.0/2]]]
                       (binary_expression
                         (number)
                         (number)))))))))))))
+
+==================
+Case insensitivity (expressions)
+==================
+
+Y[AcOs[1]]
+Z[Sin[1 mOd 2]]
+
+---
+
+(source_file
+  (line
+    (word
+      (axis_word
+        (axis_identifier)
+        (expression
+          (unary_expression
+            (expression
+              (number)))))))
+  (line
+    (word
+      (axis_word
+        (axis_identifier)
+        (expression
+          (unary_expression
+            (expression
+              (binary_expression
+                (number)
+                (number)))))))))
+
+==================
+Case insensitivity (words)
+==================
+
+g92 e0
+
+---
+
+(source_file
+  (line
+    (word
+      (g_word
+        (number)))
+    (word
+      (axis_word
+        (axis_identifier)
+        (number)))))
