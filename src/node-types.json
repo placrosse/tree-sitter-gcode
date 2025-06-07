@@ -101,7 +101,7 @@
   },
   {
     "type": "eol_comment",
-    "named": false,
+    "named": true,
     "fields": {}
   },
   {
@@ -235,10 +235,6 @@
         },
         {
           "type": "eol_comment",
-          "named": true
-        },
-        {
-          "type": "inline_comment",
           "named": true
         },
         {
@@ -626,6 +622,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -671,10 +671,6 @@
   },
   {
     "type": "cos",
-    "named": false
-  },
-  {
-    "type": "eol_comment",
     "named": false
   },
   {
@@ -735,6 +731,10 @@
   },
   {
     "type": "mod",
+    "named": false
+  },
+  {
+    "type": "n",
     "named": false
   },
   {

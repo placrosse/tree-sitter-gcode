@@ -43,15 +43,14 @@ G28 (Test) (Test)
     (word
       (t_word
         (unsigned_integer)))
-    (eol_comment))
-  (line
     (inline_comment))
+  (inline_comment)
   (line
     (word
       (g_word
         (number)))
     (inline_comment)
-    (eol_comment)))
+    (inline_comment)))
 
 ==================
 Inline comments
@@ -74,4 +73,4 @@ N4 G92 (Test) (Test) E0 (Test)
       (axis_word
         (axis_identifier)
         (number)))
-    (eol_comment)))
+    (inline_comment)))

@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: 'gcode',
 
-  extras: (_) => [/\s/],
+  extras: ($) => [/\s/, $.inline_comment],
 
   rules: {
     source_file: ($) =>
@@ -27,19 +27,19 @@ module.exports = grammar({
 
     inline_comment: (_) => seq('(', /[^\)]*/, ')'),
 
-    eol_comment: ($) =>
-      alias(prec(2, choice($.inline_comment, seq(';', /.*/))), 'eol_comment'),
+    eol_comment: ($) => seq(';', /.*/),
 
     line: ($) =>
       seq(
         optional($.line_number),
-        repeat1(choice($.word, $.inline_comment)),
+        repeat1($.word),
         optional($.checksum),
         optional($.eol_comment),
         $._end_of_line,
       ),
 
-    line_number: ($) => seq(/[nN]/, $.unsigned_integer),
+    _line_identifier: (_) => caseInsensitive('n'),
+    line_number: ($) => seq($._line_identifier, $.unsigned_integer),
 
     unsigned_number: (_) =>
       choice(
@@ -193,10 +193,13 @@ module.exports = grammar({
     o_word: ($) =>
       seq(
         $._o_word_identifier,
-        $.number,
+        choice($.number, field('subroutine_name', $.property_name)),
         // optional($.eol_comment),
         // $.empty_line,
       ),
+
+    // subroutine_definition: ($) => '',
+    // subroutine_body: ($) => '',
 
     checksum: ($) => seq('*', $.number),
   },

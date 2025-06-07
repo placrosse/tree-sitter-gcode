@@ -96,35 +96,17 @@
       ]
     },
     "eol_comment": {
-      "type": "ALIAS",
-      "content": {
-        "type": "PREC",
-        "value": 2,
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "inline_comment"
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": ";"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": ".*"
-                }
-              ]
-            }
-          ]
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ";"
+        },
+        {
+          "type": "PATTERN",
+          "value": ".*"
         }
-      },
-      "named": false,
-      "value": "eol_comment"
+      ]
     },
     "line": {
       "type": "SEQ",
@@ -144,17 +126,8 @@
         {
           "type": "REPEAT1",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "word"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "inline_comment"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "word"
           }
         },
         {
@@ -187,12 +160,21 @@
         }
       ]
     },
+    "_line_identifier": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[nN]"
+      },
+      "named": false,
+      "value": "n"
+    },
     "line_number": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[nN]"
+          "type": "SYMBOL",
+          "name": "_line_identifier"
         },
         {
           "type": "SYMBOL",
@@ -1381,8 +1363,21 @@
           "name": "_o_word_identifier"
         },
         {
-          "type": "SYMBOL",
-          "name": "number"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "number"
+            },
+            {
+              "type": "FIELD",
+              "name": "subroutine_name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "property_name"
+              }
+            }
+          ]
         }
       ]
     },
@@ -1404,6 +1399,10 @@
     {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "inline_comment"
     }
   ],
   "conflicts": [],
