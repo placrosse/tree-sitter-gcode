@@ -38,6 +38,8 @@ jobs:
         uses: tree-sitter/parser-test-action@v2
         with:
           test-rust: true
+        env:
+          TREE_SITTER_REF: v0.25.4
       - name: Parse sample files
         uses: tree-sitter/parse-action@v4
         id: parse-files
