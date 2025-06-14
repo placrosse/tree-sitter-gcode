@@ -193,15 +193,13 @@ module.exports = grammar({
           caseInsensitive('sin'),
           caseInsensitive('sqrt'),
           caseInsensitive('tan'),
+          caseInsensitive('atan'),
           caseInsensitive('exists'),
           caseInsensitive('bin'),
           caseInsensitive('bcd'),
         ),
         $._operand,
       ),
-
-    _atan_expression: ($) =>
-      seq(caseInsensitive('atan'), $._operand, '/', $._operand),
 
     // O-code subroutines
     _fanuc_o_word: ($) => seq($._o_word_identifier, $.number),

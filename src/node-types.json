@@ -1125,6 +1125,10 @@
     "named": false
   },
   {
+    "type": "atan",
+    "named": false
+  },
+  {
     "type": "axis_identifier",
     "named": true
   },

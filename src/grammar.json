@@ -1346,6 +1346,15 @@
               "type": "ALIAS",
               "content": {
                 "type": "PATTERN",
+                "value": "[aA][tT][aA][nN]"
+              },
+              "named": false,
+              "value": "atan"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
                 "value": "[eE][xX][iI][sS][tT][sS]"
               },
               "named": false,
@@ -1370,32 +1379,6 @@
               "value": "bcd"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_operand"
-        }
-      ]
-    },
-    "_atan_expression": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[aA][tT][aA][nN]"
-          },
-          "named": false,
-          "value": "atan"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_operand"
-        },
-        {
-          "type": "STRING",
-          "value": "/"
         },
         {
           "type": "SYMBOL",
