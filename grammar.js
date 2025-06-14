@@ -14,7 +14,8 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._fanuc_o_word, $.direct_label],
-    [$.o_word, $.subroutine_body],
+    [$.o_word, $.subroutine_block],
+    [$._while_loop, $._do_while_loop],
   ],
 
   rules: {
@@ -208,7 +209,7 @@ module.exports = grammar({
     fanuc_if_statement: ($) =>
       seq(
         caseInsensitive('if'),
-        $.expression,
+        field('condition', $.expression),
         choice($.fanuc_unconditional, $._fanuc_conditional),
       ),
     fanuc_unconditional: ($) => seq(caseInsensitive('goto'), $.integer),
@@ -218,7 +219,7 @@ module.exports = grammar({
     fanuc_loop: ($) =>
       seq(
         caseInsensitive('while'),
-        $.expression,
+        field('condition', $.expression),
         caseInsensitive('do'),
         $.integer,
         $._end_of_line,
@@ -255,38 +256,34 @@ module.exports = grammar({
         optional(repeat1(field('arg', $.expression))),
       ),
 
+    subroutine_block: ($) =>
+      choice(
+        $.line,
+        $.return_statement,
+        $.if_statement,
+        $.loop,
+        $.continue_statement,
+        $.break_statement,
+      ),
+
     subroutine_definition: ($) =>
       seq(
         $._label,
         caseInsensitive('sub'),
         $._end_of_line,
-        optional($.subroutine_body),
+        repeat1($.subroutine_block),
         $._label,
         caseInsensitive('endsub'),
         optional(field('return_value', $.expression)),
-      ),
-
-    subroutine_body: ($) =>
-      prec.left(
-        repeat1(
-          choice(
-            $.line,
-            $.return_statement,
-            $.if_statement,
-            $.loop,
-            // $.continue_statement,
-            // $.break_statement,
-          ),
-        ),
       ),
 
     if_statement: ($) =>
       seq(
         $._label,
         caseInsensitive('if'),
-        $.expression,
+        field('condition', $.expression),
         $._end_of_line,
-        $.subroutine_body,
+        repeat1($.subroutine_block),
         repeat($.elseif_clause),
         optional($.else_clause),
         $._label,
@@ -298,9 +295,9 @@ module.exports = grammar({
         seq(
           $._label,
           caseInsensitive('elseif'),
-          $.expression,
+          field('condition', $.expression),
           $._end_of_line,
-          optional($.subroutine_body),
+          repeat1($.subroutine_block),
         ),
       ),
 
@@ -310,7 +307,7 @@ module.exports = grammar({
           $._label,
           caseInsensitive('else'),
           $._end_of_line,
-          optional($.subroutine_body),
+          repeat1($.subroutine_block),
         ),
       ),
 
@@ -320,9 +317,9 @@ module.exports = grammar({
       seq(
         $._label,
         caseInsensitive('while'),
-        $.expression,
+        field('condition', $.expression),
         $._end_of_line,
-        $.subroutine_body,
+        repeat1($.subroutine_block),
         $._label,
         caseInsensitive('endwhile'),
       ),
@@ -332,19 +329,19 @@ module.exports = grammar({
         $._label,
         caseInsensitive('do'),
         $._end_of_line,
-        $.subroutine_body,
+        repeat1($.subroutine_block),
         $._label,
         caseInsensitive('while'),
-        $.expression,
+        field('condition', $.expression),
       ),
 
     _repeat_loop: ($) =>
       seq(
         $._label,
         caseInsensitive('repeat'),
-        $.expression,
+        field('condition', $.expression),
         $._end_of_line,
-        $.subroutine_body,
+        repeat1($.subroutine_block),
         $._label,
         caseInsensitive('endrepeat'),
       ),
