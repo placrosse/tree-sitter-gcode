@@ -294,6 +294,7 @@ Valued named parameter referencing another named parameter
 ==================
 Polar coordinates
 ==================
+
 G91 @.5 ^90
 
 ---
@@ -308,4 +309,29 @@ G91 @.5 ^90
         (number)))
     (word
       (polar_angle
+        (number)))))
+
+==================
+Spindle select
+==================
+
+S100 $0
+M3 $-1
+
+---
+
+(source_file
+  (line
+    (word
+      (s_word
+        (unsigned_integer)))
+    (word
+      (spindle_select
+        (number))))
+  (line
+    (word
+      (m_word
+        (number)))
+    (word
+      (spindle_select
         (number)))))

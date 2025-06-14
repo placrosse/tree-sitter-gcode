@@ -12,6 +12,12 @@ module.exports = grammar({
 
   extras: ($) => [/\s/, $.inline_comment],
 
+  conflicts: ($) => [
+    [$.word, $.subroutine_body],
+    [$._fanuc_o_word, $.direct_label],
+    [$.o_word, $.subroutine_body],
+  ],
+
   rules: {
     source_file: ($) =>
       choice(
@@ -61,12 +67,14 @@ module.exports = grammar({
         $.t_word,
         $.s_word,
         $.f_word,
+        $.o_word,
         $.axis_word,
         $.indexed_axis_word,
         $.parameter_word,
         $.parameter_variable,
         $.polar_distance,
         $.polar_angle,
+        $.spindle_select,
         $.other_word,
       ),
 
@@ -79,7 +87,7 @@ module.exports = grammar({
     _other_word_identifier: (_) => /[dDhHiIjJkKlLqQrR]/,
     axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     parameter_identifier: (_) => /[pP#]/,
-    property_name: (_) => seq('<', /[a-zA-Z0-9_]*/, '>'),
+    property_name: (_) => seq('<', /[a-zA-Z0-9_-]*/, '>'),
 
     g_word: ($) => seq($._g_word_identifier, choice($.number, $.expression)),
     m_word: ($) => seq($._m_word_identifier, choice($.number, $.expression)),
@@ -92,8 +100,12 @@ module.exports = grammar({
     s_word: ($) =>
       seq($._s_word_identifier, choice($.unsigned_integer, $.expression)),
 
-    polar_distance: ($) => seq(/@/, choice($.number, $.expression)),
-    polar_angle: ($) => seq(/\^/, choice($.number, $.expression)),
+    polar_distance: ($) => seq('@', choice($.number, $.expression)),
+    polar_angle: ($) => seq('^', choice($.number, $.expression)),
+
+    checksum: ($) => seq('*', $.number),
+
+    spindle_select: ($) => seq('$', $.number),
 
     axis_word: ($) => seq($.axis_identifier, choice($.number, $.expression)),
     indexed_axis_word: ($) =>
@@ -130,7 +142,6 @@ module.exports = grammar({
         choice(
           $.binary_expression,
           $.unary_expression,
-          $.atan_expression,
           $.parameter_word,
           $.expression,
           $.number,
@@ -147,6 +158,7 @@ module.exports = grammar({
         $.parameter_word,
       ),
 
+    // prec ref: https://linuxcnc.org/docs/html/gcode/overview.html#gcode:expressions
     binary_expression: ($) =>
       choice(
         prec.left(3, seq($._operand, '+', $._operand)),
@@ -182,42 +194,178 @@ module.exports = grammar({
           caseInsensitive('sort'),
           caseInsensitive('tan'),
           caseInsensitive('exists'),
+          caseInsensitive('bin'),
+          caseInsensitive('bcd'),
         ),
         $._operand,
       ),
 
-    atan_expression: ($) =>
+    _atan_expression: ($) =>
       seq(caseInsensitive('atan'), $._operand, '/', $._operand),
 
     // O-code subroutines
+    _fanuc_o_word: ($) => seq($._o_word_identifier, $.number),
+
+    fanuc_if_statement: ($) =>
+      seq(
+        caseInsensitive('if'),
+        $.expression,
+        choice($.fanuc_unconditional, $._fanuc_conditional),
+      ),
+    fanuc_unconditional: ($) => seq(caseInsensitive('goto'), $.integer),
+    _fanuc_conditional: ($) =>
+      seq(caseInsensitive('then'), choice($.expression, $.parameter_variable)),
+
+    fanuc_loop: ($) =>
+      seq(
+        caseInsensitive('while'),
+        $.expression,
+        caseInsensitive('do'),
+        $.integer,
+        $._end_of_line,
+        repeat1($.line),
+        $._fanuc_loop_end,
+      ),
+    _fanuc_loop_end: ($) => seq(caseInsensitive('end'), $.integer),
+
     o_word: ($) =>
+      choice(
+        $.subroutine_call,
+        $._fanuc_o_word,
+        $.subroutine_definition,
+        $.fanuc_loop,
+        $.fanuc_if_statement,
+        $.fanuc_unconditional,
+        $.if_statement,
+        $.loop,
+      ),
+
+    _label: ($) => choice($.direct_label, $.indirect_label),
+
+    direct_label: ($) =>
       seq(
         $._o_word_identifier,
         choice($.number, field('subroutine_name', $.property_name)),
-        // optional($.eol_comment),
-        // $.empty_line,
+      ),
+    indirect_label: ($) => seq($._o_word_identifier, $.expression),
+
+    subroutine_call: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('call'),
+        optional(repeat1(field('arg', $.expression))),
       ),
 
-    // subroutine_definition: ($) => '',
-    // subroutine_body: ($) => '',
+    subroutine_definition: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('sub'),
+        $._end_of_line,
+        optional($.subroutine_body),
+        $._label,
+        caseInsensitive('endsub'),
+        optional(field('return_value', $.expression)),
+      ),
 
-    checksum: ($) => seq('*', $.number),
+    subroutine_body: ($) =>
+      prec.left(
+        repeat1(
+          choice(
+            $.line,
+            $.return_statement,
+            $.if_statement,
+            $.loop,
+            // $.continue_statement,
+            // $.break_statement,
+          ),
+        ),
+      ),
+
+    if_statement: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('if'),
+        $.expression,
+        $._end_of_line,
+        $.subroutine_body,
+        repeat($.elseif_clause),
+        optional($.else_clause),
+        $._label,
+        caseInsensitive('endif'),
+      ),
+
+    elseif_clause: ($) =>
+      prec.left(
+        seq(
+          $._label,
+          caseInsensitive('elseif'),
+          $.expression,
+          $._end_of_line,
+          optional($.subroutine_body),
+        ),
+      ),
+
+    else_clause: ($) =>
+      prec.left(
+        seq(
+          $._label,
+          caseInsensitive('else'),
+          $._end_of_line,
+          optional($.subroutine_body),
+        ),
+      ),
+
+    loop: ($) => choice($._while_loop, $._do_while_loop, $._repeat_loop),
+
+    _while_loop: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('while'),
+        $.expression,
+        $._end_of_line,
+        $.subroutine_body,
+        $._label,
+        caseInsensitive('endwhile'),
+      ),
+
+    _do_while_loop: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('do'),
+        $._end_of_line,
+        $.subroutine_body,
+        $._label,
+        caseInsensitive('while'),
+        $.expression,
+      ),
+
+    _repeat_loop: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('repeat'),
+        $.expression,
+        $._end_of_line,
+        $.subroutine_body,
+        $._label,
+        caseInsensitive('endrepeat'),
+      ),
+
+    continue_statement: ($) => seq($._label, caseInsensitive('continue')),
+    break_statement: ($) => seq($._label, caseInsensitive('break')),
+
+    return_statement: ($) =>
+      seq(
+        $._label,
+        caseInsensitive('return'),
+        optional(field('return_value', $.expression)),
+      ),
   },
 });
 
 /**
- * Makes a rule possibly be separated by a comma to for it to be repeated
- *
- * @param {Rule} rule - Rule
- */
-// function commaSep(rule) {
-//   return seq(rule, repeat(seq(',', rule)));
-// }
-
-/**
  * Makes a keyword case insensitive.
  *
- * https://github.com/stadelmanma/tree-sitter-fortran/blob/master/grammar.js#L2305
+ * https://github.com/stadelmanma/tree-sitter-fortran/blob/master/grammar.js#L2353
  *
  * @param {string} keyword - Keyword
  * @param {boolean} aliasAsWord - Should function return an AliasRule with alias being the keyword

@@ -19,13 +19,14 @@
 - [x] G-code expressions (specified in [RS274NGC](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=823374))
 - [x] Named parameters (check [named paramters for LinuxCNC](https://linuxcnc.org/docs/html/gcode/overview.html#gcode:named-parameters))
 - [x] M98 and M99 G-Code subprograms with parameter variables (check [cnccookbook](https://www.cnccookbook.com/m98-m99-g-code-cnc-subprograms/))
-- [ ] G-code subroutines (extended [O-codes in LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
+- [x] G-code subroutines with conditionals and loops support (extended [O-codes in LinuxCNC](https://linuxcnc.org/docs/html/gcode/o-code.html))
+- [x] Fanuc-style subprograms, conditionals and loops
 
 ## Status
 
-This parser was written using a list of references described in the [References](https://github.com/ChocolateNao/tree-sitter-gcode?tab=readme-ov-file#references) section. It should work with most cases. There are many G-code flavors out there so some unique features may not be supported in this grammar.
+This parser was written using a list of references described in the [References](https://github.com/ChocolateNao/tree-sitter-gcode?tab=readme-ov-file#references) section. It should work with most cases. Due to wide range of G-code implementations, some unique features may not be supported in this grammar. However, I was trying my best to match common specifications as precise as possible.
 
-Feel free to open an issue with a feature request or do a pull request to extend this grammar to support as many features as possible.
+Feel free to open an issue with a feature request or do a pull request to extend this grammar to support more features.
 
 ## References
 
