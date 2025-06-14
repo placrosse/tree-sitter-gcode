@@ -224,7 +224,7 @@ static const char * const ts_symbol_names[] = {
   [aux_sym_unary_expression_token8] = "ln",
   [aux_sym_unary_expression_token9] = "round",
   [aux_sym_unary_expression_token10] = "sin",
-  [aux_sym_unary_expression_token11] = "sort",
+  [aux_sym_unary_expression_token11] = "sqrt",
   [aux_sym_unary_expression_token12] = "tan",
   [aux_sym_unary_expression_token13] = "exists",
   [aux_sym_unary_expression_token14] = "bin",
@@ -1863,8 +1863,8 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 43:
       if (lookahead == 'I' ||
           lookahead == 'i') ADVANCE(55);
-      if (lookahead == 'O' ||
-          lookahead == 'o') ADVANCE(75);
+      if (lookahead == 'Q' ||
+          lookahead == 'q') ADVANCE(75);
       if (lookahead == 'U' ||
           lookahead == 'u') ADVANCE(12);
       END_STATE();
@@ -2246,8 +2246,8 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(aux_sym__s_word_identifier_token1);
       if (lookahead == 'I' ||
           lookahead == 'i') ADVANCE(55);
-      if (lookahead == 'O' ||
-          lookahead == 'o') ADVANCE(75);
+      if (lookahead == 'Q' ||
+          lookahead == 'q') ADVANCE(75);
       if (lookahead == 'U' ||
           lookahead == 'u') ADVANCE(12);
       END_STATE();

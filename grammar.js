@@ -191,7 +191,7 @@ module.exports = grammar({
           caseInsensitive('ln'),
           caseInsensitive('round'),
           caseInsensitive('sin'),
-          caseInsensitive('sort'),
+          caseInsensitive('sqrt'),
           caseInsensitive('tan'),
           caseInsensitive('exists'),
           caseInsensitive('bin'),

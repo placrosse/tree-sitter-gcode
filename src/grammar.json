@@ -1328,10 +1328,10 @@
               "type": "ALIAS",
               "content": {
                 "type": "PATTERN",
-                "value": "[sS][oO][rR][tT]"
+                "value": "[sS][qQ][rR][tT]"
               },
               "named": false,
-              "value": "sort"
+              "value": "sqrt"
             },
             {
               "type": "ALIAS",
