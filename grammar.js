@@ -13,7 +13,6 @@ module.exports = grammar({
   extras: ($) => [/\s/, $.inline_comment],
 
   conflicts: ($) => [
-    [$.word, $.subroutine_body],
     [$._fanuc_o_word, $.direct_label],
     [$.o_word, $.subroutine_body],
   ],
