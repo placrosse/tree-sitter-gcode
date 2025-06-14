@@ -190,11 +190,6 @@
     }
   },
   {
-    "type": "eol_comment",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "expression",
     "named": true,
     "fields": {},
@@ -432,11 +427,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "inline_comment",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "integer",
@@ -716,11 +706,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "property_name",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "return_statement",
@@ -1045,14 +1030,6 @@
     "named": false
   },
   {
-    "type": "(",
-    "named": false
-  },
-  {
-    "type": ")",
-    "named": false
-  },
-  {
     "type": "*",
     "named": false
   },
@@ -1077,19 +1054,7 @@
     "named": false
   },
   {
-    "type": ";",
-    "named": false
-  },
-  {
-    "type": "<",
-    "named": false
-  },
-  {
     "type": "=",
-    "named": false
-  },
-  {
-    "type": ">",
     "named": false
   },
   {
@@ -1189,6 +1154,10 @@
     "named": false
   },
   {
+    "type": "eol_comment",
+    "named": true
+  },
+  {
     "type": "eq",
     "named": false
   },
@@ -1231,6 +1200,11 @@
   {
     "type": "if",
     "named": false
+  },
+  {
+    "type": "inline_comment",
+    "named": true,
+    "extra": true
   },
   {
     "type": "integer",
@@ -1278,6 +1252,10 @@
   },
   {
     "type": "parameter_identifier",
+    "named": true
+  },
+  {
+    "type": "property_name",
     "named": true
   },
   {

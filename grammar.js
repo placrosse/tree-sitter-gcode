@@ -31,9 +31,9 @@ module.exports = grammar({
 
     _end_of_line: (_) => token(choice(/\n/, /\r\n/, /\r/)),
 
-    inline_comment: (_) => seq('(', /[^\)]*/, ')'),
+    inline_comment: (_) => token(seq('(', /[^\)]*/, ')')),
 
-    eol_comment: ($) => seq(';', /.*/),
+    eol_comment: (_) => token(seq(';', /.*/)),
 
     line: ($) =>
       seq(
@@ -87,7 +87,7 @@ module.exports = grammar({
     _other_word_identifier: (_) => /[dDhHiIjJkKlLqQrR]/,
     axis_identifier: (_) => /[xXyYzZaAbBcCuUvVwWeE]/,
     parameter_identifier: (_) => /[pP#]/,
-    property_name: (_) => seq('<', /[a-zA-Z0-9_-]*/, '>'),
+    property_name: (_) => token(seq('<', /[a-zA-Z0-9_-]*/, '>')),
 
     g_word: ($) => seq($._g_word_identifier, choice($.number, $.expression)),
     m_word: ($) => seq($._m_word_identifier, choice($.number, $.expression)),
