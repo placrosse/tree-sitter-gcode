@@ -1,5 +1,5 @@
 {
-  "name": "tree-sitter-gcode",
+  "name": "@choconao/tree-sitter-gcode",
   "version": "0.1.0",
   "description": "G-code grammar for tree-sitter",
   "repository": "https://github.com/chocolatenao/tree-sitter-gcode.git",
