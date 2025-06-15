@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-gcode",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "G-code grammar for tree-sitter",
   "repository": "https://github.com/chocolatenao/tree-sitter-gcode.git",
   "license": "MIT",
