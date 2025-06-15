@@ -2,7 +2,10 @@
   "name": "@choconao/tree-sitter-gcode",
   "version": "0.1.0",
   "description": "G-code grammar for tree-sitter",
-  "repository": "https://github.com/chocolatenao/tree-sitter-gcode.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chocolatenao/tree-sitter-gcode.git"
+  },
   "license": "MIT",
   "author": {
     "name": "ChocolateNao",
