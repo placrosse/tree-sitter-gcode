@@ -92,37 +92,43 @@ module.exports = grammar({
     parameter_identifier: (_) => /[pP#]/,
     property_name: (_) => token(seq('<', /[a-zA-Z0-9_-]*/, '>')),
 
-    g_word: ($) => seq($._g_word_identifier, choice($.number, $.expression)),
-    m_word: ($) => seq($._m_word_identifier, choice($.number, $.expression)),
-    f_word: ($) => seq($._f_word_identifier, choice($.number, $.expression)),
+    _word_code: ($) => choice($.number, $.expression, $.parameter_word),
+    _word_code_unsigned_int: ($) =>
+      choice($.unsigned_integer, $.expression, $.parameter_word),
+
+    g_word: ($) => seq($._g_word_identifier, $._word_code),
+    m_word: ($) => seq($._m_word_identifier, $._word_code),
+    f_word: ($) => seq($._f_word_identifier, $._word_code),
 
     t_marlin_special: ($) => seq($._t_word_identifier, /[?cxCX]/),
     // gcode errors when a negative integer value is used with these words
     t_word: ($) =>
-      choice(seq($._t_word_identifier, $.unsigned_integer), $.t_marlin_special),
-    s_word: ($) =>
-      seq($._s_word_identifier, choice($.unsigned_integer, $.expression)),
+      choice(
+        seq($._t_word_identifier, $._word_code_unsigned_int),
+        $.t_marlin_special,
+      ),
+    s_word: ($) => seq($._s_word_identifier, $._word_code_unsigned_int),
 
-    polar_distance: ($) => seq('@', choice($.number, $.expression)),
-    polar_angle: ($) => seq('^', choice($.number, $.expression)),
+    polar_distance: ($) => seq('@', $._word_code),
+    polar_angle: ($) => seq('^', $._word_code),
 
-    checksum: ($) => seq('*', $.number),
+    checksum: ($) => seq('*', $._word_code),
 
-    spindle_select: ($) => seq('$', $.number),
+    spindle_select: ($) => seq('$', $._word_code),
 
-    axis_word: ($) => seq($.axis_identifier, choice($.number, $.expression)),
+    axis_word: ($) => seq($.axis_identifier, $._word_code),
     indexed_axis_word: ($) =>
       seq(
         $.axis_identifier,
         field('index', $.unsigned_integer),
         '=',
-        choice($.number, $.expression),
+        $._word_code,
       ),
 
     parameter_word: ($) =>
       seq(
         $.parameter_identifier,
-        choice($.integer, field('parameter_name', $.property_name)),
+        choice($.number, field('parameter_name', $.property_name)),
       ),
     parameter_variable: ($) =>
       seq(
@@ -132,11 +138,11 @@ module.exports = grammar({
           field('parameter_name', $.property_name),
         ),
         '=',
-        choice($.number, $.expression),
+        $._word_code,
       ),
 
     other_word: ($) =>
-      seq($._other_word_identifier, choice(optional($.number), $.expression)),
+      prec.left(seq($._other_word_identifier, optional($._word_code))),
 
     // Expressions
     expression: ($) =>

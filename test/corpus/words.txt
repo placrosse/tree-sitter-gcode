@@ -53,7 +53,7 @@ G28 P1
     (word
       (parameter_word
         (parameter_identifier)
-        (integer)))))
+        (number)))))
 
 ==================
 Line number
@@ -236,7 +236,7 @@ Parameter variable (expression with parameter reference)
           (binary_expression
             (parameter_word
               (parameter_identifier)
-              (integer))
+              (number))
             (number)))))))
 
 ==================

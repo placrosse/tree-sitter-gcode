@@ -39,7 +39,7 @@ o[#101+2] call
               (binary_expression
                 (parameter_word
                   (parameter_identifier)
-                  (integer))
+                  (number))
                 (number)))))))))
 
 ==================
@@ -83,7 +83,7 @@ END 1
             (binary_expression
               (parameter_word
                 (parameter_identifier)
-                (integer))
+                (number))
               (number)))
           (integer)
           (line
@@ -95,7 +95,7 @@ END 1
                   (binary_expression
                     (parameter_word
                       (parameter_identifier)
-                      (integer))
+                      (number))
                     (number))))))
           (integer))))))
 
@@ -115,7 +115,7 @@ IF [#0] THEN #1 = 1
           (expression
             (parameter_word
               (parameter_identifier)
-              (integer)))
+              (number)))
           (parameter_variable
             (parameter_identifier)
             (unsigned_integer)
@@ -211,7 +211,7 @@ o100 endsub
                       (binary_expression
                         (parameter_word
                           (parameter_identifier)
-                          (integer))
+                          (number))
                         (number)))
                     (subroutine_block
                       (return_statement
@@ -243,7 +243,7 @@ o101 endif
             (binary_expression
               (parameter_word
                 (parameter_identifier)
-                (integer))
+                (number))
               (number)))
           (subroutine_block
             (line
@@ -278,7 +278,7 @@ o102 endif
             (binary_expression
               (parameter_word
                 (parameter_identifier)
-                (integer))
+                (number))
               (number)))
           (subroutine_block
             (line
@@ -292,7 +292,7 @@ o102 endif
               (binary_expression
                 (parameter_word
                   (parameter_identifier)
-                  (integer))
+                  (number))
                 (number)))
             (subroutine_block
               (line
@@ -331,7 +331,7 @@ o101 endwhile
             (binary_expression
               (parameter_word
                 (parameter_identifier)
-                (integer))
+                (number))
               (number)))
           (subroutine_block
             (line
@@ -343,7 +343,7 @@ o101 endwhile
                     (binary_expression
                       (parameter_word
                         (parameter_identifier)
-                        (integer))
+                        (number))
                       (number)))))))
           (direct_label
             (number)))))))
@@ -380,7 +380,7 @@ o100 while [#1 LT 3]
                       (binary_expression
                         (parameter_word
                           (parameter_identifier)
-                          (integer))
+                          (number))
                         (number)))
                     (subroutine_block
                       (line
@@ -405,7 +405,7 @@ o100 while [#1 LT 3]
                     (binary_expression
                       (parameter_word
                         (parameter_identifier)
-                        (integer))
+                        (number))
                       (number)))))))
           (direct_label
             (number))
@@ -413,7 +413,7 @@ o100 while [#1 LT 3]
             (binary_expression
               (parameter_word
                 (parameter_identifier)
-                (integer))
+                (number))
               (number))))))))
 
 ==================

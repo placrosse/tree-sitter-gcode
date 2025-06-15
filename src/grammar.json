@@ -457,6 +457,40 @@
         ]
       }
     },
+    "_word_code": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter_word"
+        }
+      ]
+    },
+    "_word_code_unsigned_int": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "unsigned_integer"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter_word"
+        }
+      ]
+    },
     "g_word": {
       "type": "SEQ",
       "members": [
@@ -465,17 +499,8 @@
           "name": "_g_word_identifier"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -487,17 +512,8 @@
           "name": "_m_word_identifier"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -509,17 +525,8 @@
           "name": "_f_word_identifier"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -548,7 +555,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "unsigned_integer"
+              "name": "_word_code_unsigned_int"
             }
           ]
         },
@@ -566,17 +573,8 @@
           "name": "_s_word_identifier"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "unsigned_integer"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code_unsigned_int"
         }
       ]
     },
@@ -588,17 +586,8 @@
           "value": "@"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -610,17 +599,8 @@
           "value": "^"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -633,7 +613,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "_word_code"
         }
       ]
     },
@@ -646,7 +626,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "_word_code"
         }
       ]
     },
@@ -658,17 +638,8 @@
           "name": "axis_identifier"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -692,17 +663,8 @@
           "value": "="
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
@@ -718,7 +680,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "integer"
+              "name": "number"
             },
             {
               "type": "FIELD",
@@ -765,49 +727,35 @@
           "value": "="
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_word_code"
         }
       ]
     },
     "other_word": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_other_word_identifier"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "number"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          ]
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_other_word_identifier"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_word_code"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
     },
     "expression": {
       "type": "SEQ",

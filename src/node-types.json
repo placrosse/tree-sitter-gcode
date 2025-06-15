@@ -18,6 +18,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -81,7 +85,15 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         }
       ]
@@ -243,6 +255,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -345,6 +361,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -424,6 +444,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         }
       ]
@@ -544,6 +568,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -611,6 +639,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -655,6 +687,10 @@
         {
           "type": "parameter_identifier",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -679,7 +715,7 @@
       "required": true,
       "types": [
         {
-          "type": "integer",
+          "type": "number",
           "named": true
         },
         {
@@ -704,6 +740,10 @@
         {
           "type": "number",
           "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
         }
       ]
     }
@@ -722,6 +762,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         }
       ]
@@ -770,6 +814,10 @@
           "named": true
         },
         {
+          "type": "parameter_word",
+          "named": true
+        },
+        {
           "type": "unsigned_integer",
           "named": true
         }
@@ -809,7 +857,15 @@
       "required": true,
       "types": [
         {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
           "named": true
         }
       ]
@@ -931,6 +987,14 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "parameter_word",
+          "named": true
+        },
         {
           "type": "t_marlin_special",
           "named": true
