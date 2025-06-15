@@ -145,6 +145,10 @@
           "named": true
         },
         {
+          "type": "eol_comment",
+          "named": true
+        },
+        {
           "type": "indirect_label",
           "named": true
         },
@@ -176,6 +180,10 @@
       "types": [
         {
           "type": "direct_label",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
           "named": true
         },
         {
@@ -293,6 +301,10 @@
       "required": true,
       "types": [
         {
+          "type": "eol_comment",
+          "named": true
+        },
+        {
           "type": "integer",
           "named": true
         },
@@ -366,6 +378,10 @@
         },
         {
           "type": "elseif_clause",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
           "named": true
         },
         {
@@ -496,6 +512,10 @@
       "types": [
         {
           "type": "direct_label",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
           "named": true
         },
         {
@@ -881,6 +901,10 @@
       "types": [
         {
           "type": "direct_label",
+          "named": true
+        },
+        {
+          "type": "eol_comment",
           "named": true
         },
         {

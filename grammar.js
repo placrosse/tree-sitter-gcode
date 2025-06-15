@@ -29,19 +29,22 @@ module.exports = grammar({
 
     _statement: ($) => choice($.line, $.unsigned_integer, $.eol_comment),
 
-    _end_of_line: (_) => token(choice(/\n/, /\r\n/, /\r/)),
+    _end_of_line: ($) => choice(/\n/, /\r\n/, /\r/, $.eol_comment),
 
     inline_comment: (_) => token(seq('(', /[^\)]*/, ')')),
 
     eol_comment: (_) => token(seq(';', /.*/)),
 
     line: ($) =>
-      seq(
-        optional($.line_number),
-        repeat1($.word),
-        optional($.checksum),
-        optional($.eol_comment),
-        $._end_of_line,
+      prec(
+        2,
+        seq(
+          optional($.line_number),
+          repeat1($.word),
+          optional($.checksum),
+          optional($.eol_comment),
+          $._end_of_line,
+        ),
       ),
 
     _line_identifier: (_) => caseInsensitive('n'),
@@ -224,6 +227,7 @@ module.exports = grammar({
         repeat1($.line),
         $._fanuc_loop_end,
       ),
+
     _fanuc_loop_end: ($) => seq(caseInsensitive('end'), $.integer),
 
     o_word: ($) =>
