@@ -41,4 +41,4 @@ build.zig linguist-generated
 build.zig.zon linguist-generated
 
 # Examples
-examples/* linguist-generated
+examples/* linguist-vendored
