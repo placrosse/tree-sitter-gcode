@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-gcode
-        VERSION "0.1.0"
+        VERSION "0.1.1"
         DESCRIPTION "G-code grammar for tree-sitter"
         HOMEPAGE_URL "https://github.com/chocolatenao/tree-sitter-gcode.git"
         LANGUAGES C)
