@@ -7,6 +7,14 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+const PREC = {
+  unary: 5,
+  multiplicative: 4,
+  additive: 3,
+  comparative: 2,
+  logical: 1,
+};
+
 module.exports = grammar({
   name: 'gcode',
 
@@ -170,21 +178,51 @@ module.exports = grammar({
     // prec ref: https://linuxcnc.org/docs/html/gcode/overview.html#gcode:expressions
     binary_expression: ($) =>
       choice(
-        prec.left(3, seq($._operand, '+', $._operand)),
-        prec.left(3, seq($._operand, '-', $._operand)),
-        prec.left(4, seq($._operand, '*', $._operand)),
-        prec.left(4, seq($._operand, '/', $._operand)),
-        prec.left(4, seq($._operand, caseInsensitive('mod'), $._operand)),
-        prec.left(5, seq($._operand, '**', $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('eq'), $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('ne'), $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('gt'), $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('ge'), $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('lt'), $._operand)),
-        prec.left(2, seq($._operand, caseInsensitive('le'), $._operand)),
-        prec.left(1, seq($._operand, caseInsensitive('and'), $._operand)),
-        prec.left(1, seq($._operand, caseInsensitive('or'), $._operand)),
-        prec.left(1, seq($._operand, caseInsensitive('xor'), $._operand)),
+        prec.left(PREC.additive, seq($._operand, '+', $._operand)),
+        prec.left(PREC.additive, seq($._operand, '-', $._operand)),
+        prec.left(PREC.multiplicative, seq($._operand, '*', $._operand)),
+        prec.left(PREC.multiplicative, seq($._operand, '/', $._operand)),
+        prec.left(
+          PREC.multiplicative,
+          seq($._operand, caseInsensitive('mod'), $._operand),
+        ),
+        prec.left(PREC.unary, seq($._operand, '**', $._operand)),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('eq'), $._operand),
+        ),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('ne'), $._operand),
+        ),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('gt'), $._operand),
+        ),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('ge'), $._operand),
+        ),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('lt'), $._operand),
+        ),
+        prec.left(
+          PREC.comparative,
+          seq($._operand, caseInsensitive('le'), $._operand),
+        ),
+        prec.left(
+          PREC.logical,
+          seq($._operand, caseInsensitive('and'), $._operand),
+        ),
+        prec.left(
+          PREC.logical,
+          seq($._operand, caseInsensitive('or'), $._operand),
+        ),
+        prec.left(
+          PREC.logical,
+          seq($._operand, caseInsensitive('xor'), $._operand),
+        ),
       ),
 
     unary_expression: ($) =>
@@ -248,7 +286,8 @@ module.exports = grammar({
         $.loop,
       ),
 
-    _label: ($) => choice($.direct_label, $.indirect_label),
+    _label: ($) =>
+      field('label_type', choice($.direct_label, $.indirect_label)),
 
     direct_label: ($) =>
       seq(

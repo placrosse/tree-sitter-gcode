@@ -1547,17 +1547,21 @@
       ]
     },
     "_label": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "direct_label"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "indirect_label"
-        }
-      ]
+      "type": "FIELD",
+      "name": "label_type",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "direct_label"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "indirect_label"
+          }
+        ]
+      }
     },
     "direct_label": {
       "type": "SEQ",
