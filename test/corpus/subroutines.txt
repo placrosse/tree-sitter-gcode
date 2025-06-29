@@ -12,14 +12,16 @@ o<hello> call
     (word
       (o_word
         (subroutine_call
-          (direct_label
-            (number))))))
+          (label
+            (direct_label
+              (number)))))))
   (line
     (word
       (o_word
         (subroutine_call
-          (direct_label
-            (property_name)))))))
+          (label
+            (direct_label
+              (property_name))))))))
 
 ==================
 Subroutine call (indirect)
@@ -34,13 +36,14 @@ o[#101+2] call
     (word
       (o_word
         (subroutine_call
-          (indirect_label
-            (expression
-              (binary_expression
-                (parameter_word
-                  (parameter_identifier)
-                  (number))
-                (number)))))))))
+          (label
+            (indirect_label
+              (expression
+                (binary_expression
+                  (parameter_word
+                    (parameter_identifier)
+                    (number))
+                  (number))))))))))
 
 ==================
 Subroutine call (args)
@@ -55,8 +58,9 @@ o100 call [100] [2] [325]
     (word
       (o_word
         (subroutine_call
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (number))
           (expression
@@ -156,8 +160,9 @@ o100 endsub
     (word
       (o_word
         (subroutine_definition
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (subroutine_block
             (line
               (word
@@ -178,8 +183,9 @@ o100 endsub
                 (axis_word
                   (axis_identifier)
                   (number)))))
-          (direct_label
-            (number)))))))
+          (label
+            (direct_label
+              (number))))))))
 
 ==================
 Subroutine "if" statement
@@ -198,15 +204,17 @@ o100 endsub
     (word
       (o_word
         (subroutine_definition
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (subroutine_block
             (line
               (word
                 (o_word
                   (if_statement
-                    (direct_label
-                      (number))
+                    (label
+                      (direct_label
+                        (number)))
                     (expression
                       (binary_expression
                         (parameter_word
@@ -215,12 +223,15 @@ o100 endsub
                         (number)))
                     (subroutine_block
                       (return_statement
-                        (direct_label
-                          (number))))
-                    (direct_label
-                      (number)))))))
-          (direct_label
-            (number)))))))
+                        (label
+                          (direct_label
+                            (number)))))
+                    (label
+                      (direct_label
+                        (number))))))))
+          (label
+            (direct_label
+              (number))))))))
 
 ==================
 Bare "if" statement
@@ -237,8 +248,9 @@ o101 endif
     (word
       (o_word
         (if_statement
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (binary_expression
               (parameter_word
@@ -250,8 +262,9 @@ o101 endif
               (word
                 (s_word
                   (unsigned_integer)))))
-          (direct_label
-            (number)))))))
+          (label
+            (direct_label
+              (number))))))))
 
 ==================
 Subroutine "if-elseif-else" clause
@@ -272,8 +285,9 @@ o102 endif
     (word
       (o_word
         (if_statement
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (binary_expression
               (parameter_word
@@ -286,8 +300,9 @@ o102 endif
                 (f_word
                   (number)))))
           (elseif_clause
-            (direct_label
-              (number))
+            (label
+              (direct_label
+                (number)))
             (expression
               (binary_expression
                 (parameter_word
@@ -300,15 +315,17 @@ o102 endif
                   (f_word
                     (number))))))
           (else_clause
-            (direct_label
-              (number))
+            (label
+              (direct_label
+                (number)))
             (subroutine_block
               (line
                 (word
                   (f_word
                     (number))))))
-          (direct_label
-            (number)))))))
+          (label
+            (direct_label
+              (number))))))))
 
 ==================
 Subroutine "while" loop
@@ -325,8 +342,9 @@ o101 endwhile
     (word
       (o_word
         (loop
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (binary_expression
               (parameter_word
@@ -345,8 +363,9 @@ o101 endwhile
                         (parameter_identifier)
                         (number))
                       (number)))))))
-          (direct_label
-            (number)))))))
+          (label
+            (direct_label
+              (number))))))))
 
 ==================
 Subroutine "do-while" loop
@@ -367,15 +386,17 @@ o100 while [#1 LT 3]
     (word
       (o_word
         (loop
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (subroutine_block
             (line
               (word
                 (o_word
                   (if_statement
-                    (direct_label
-                      (number))
+                    (label
+                      (direct_label
+                        (number)))
                     (expression
                       (binary_expression
                         (parameter_word
@@ -391,10 +412,12 @@ o100 while [#1 LT 3]
                             (number)))))
                     (subroutine_block
                       (continue_statement
-                        (direct_label
-                          (number))))
-                    (direct_label
-                      (number)))))))
+                        (label
+                          (direct_label
+                            (number)))))
+                    (label
+                      (direct_label
+                        (number))))))))
           (subroutine_block
             (line
               (word
@@ -407,8 +430,9 @@ o100 while [#1 LT 3]
                         (parameter_identifier)
                         (number))
                       (number)))))))
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (binary_expression
               (parameter_word
@@ -431,8 +455,9 @@ o103 endrepeat
     (word
       (o_word
         (loop
-          (direct_label
-            (number))
+          (label
+            (direct_label
+              (number)))
           (expression
             (number))
           (subroutine_block
@@ -448,5 +473,6 @@ o103 endrepeat
                 (axis_word
                   (axis_identifier)
                   (number)))))
-          (direct_label
-            (number)))))))
+          (label
+            (direct_label
+              (number))))))))

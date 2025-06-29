@@ -286,8 +286,7 @@ module.exports = grammar({
         $.loop,
       ),
 
-    _label: ($) =>
-      field('label_type', choice($.direct_label, $.indirect_label)),
+    label: ($) => field('label_type', choice($.direct_label, $.indirect_label)),
 
     direct_label: ($) =>
       seq(
@@ -298,7 +297,7 @@ module.exports = grammar({
 
     subroutine_call: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('call'),
         optional(repeat1(field('arg', $.expression))),
       ),
@@ -315,32 +314,32 @@ module.exports = grammar({
 
     subroutine_definition: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('sub'),
         $._end_of_line,
         optional(repeat1($.subroutine_block)),
-        $._label,
+        $.label,
         caseInsensitive('endsub'),
         optional(field('return_value', $.expression)),
       ),
 
     if_statement: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('if'),
         field('condition', $.expression),
         $._end_of_line,
         optional(repeat1($.subroutine_block)),
         repeat($.elseif_clause),
         optional($.else_clause),
-        $._label,
+        $.label,
         caseInsensitive('endif'),
       ),
 
     elseif_clause: ($) =>
       prec.left(
         seq(
-          $._label,
+          $.label,
           caseInsensitive('elseif'),
           field('condition', $.expression),
           $._end_of_line,
@@ -351,7 +350,7 @@ module.exports = grammar({
     else_clause: ($) =>
       prec.left(
         seq(
-          $._label,
+          $.label,
           caseInsensitive('else'),
           $._end_of_line,
           optional(repeat1($.subroutine_block)),
@@ -362,43 +361,43 @@ module.exports = grammar({
 
     _while_loop: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('while'),
         field('condition', $.expression),
         $._end_of_line,
         optional(repeat1($.subroutine_block)),
-        $._label,
+        $.label,
         caseInsensitive('endwhile'),
       ),
 
     _do_while_loop: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('do'),
         $._end_of_line,
         optional(repeat1($.subroutine_block)),
-        $._label,
+        $.label,
         caseInsensitive('while'),
         field('condition', $.expression),
       ),
 
     _repeat_loop: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('repeat'),
         field('condition', $.expression),
         $._end_of_line,
         optional(repeat1($.subroutine_block)),
-        $._label,
+        $.label,
         caseInsensitive('endrepeat'),
       ),
 
-    continue_statement: ($) => seq($._label, caseInsensitive('continue')),
-    break_statement: ($) => seq($._label, caseInsensitive('break')),
+    continue_statement: ($) => seq($.label, caseInsensitive('continue')),
+    break_statement: ($) => seq($.label, caseInsensitive('break')),
 
     return_statement: ($) =>
       seq(
-        $._label,
+        $.label,
         caseInsensitive('return'),
         optional(field('return_value', $.expression)),
       ),

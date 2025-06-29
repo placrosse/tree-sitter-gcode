@@ -60,21 +60,16 @@
   {
     "type": "break_statement",
     "named": true,
-    "fields": {
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -103,21 +98,16 @@
   {
     "type": "continue_statement",
     "named": true,
-    "fields": {
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -149,28 +139,17 @@
   {
     "type": "else_clause",
     "named": true,
-    "fields": {
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -193,28 +172,18 @@
             "named": true
           }
         ]
-      },
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -397,25 +366,11 @@
             "named": true
           }
         ]
-      },
-      "label_type": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "else_clause",
@@ -427,6 +382,10 @@
         },
         {
           "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -495,6 +454,26 @@
     "fields": {}
   },
   {
+    "type": "label",
+    "named": true,
+    "fields": {
+      "label_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "direct_label",
+            "named": true
+          },
+          {
+            "type": "indirect_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "line",
     "named": true,
     "fields": {},
@@ -549,28 +528,18 @@
             "named": true
           }
         ]
-      },
-      "label_type": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -802,20 +771,6 @@
     "type": "return_statement",
     "named": true,
     "fields": {
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
-      },
       "return_value": {
         "multiple": false,
         "required": false,
@@ -826,6 +781,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -946,41 +911,23 @@
             "named": true
           }
         ]
-      },
-      "label_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "label",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "subroutine_definition",
     "named": true,
     "fields": {
-      "label_type": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "direct_label",
-            "named": true
-          },
-          {
-            "type": "indirect_label",
-            "named": true
-          }
-        ]
-      },
       "return_value": {
         "multiple": false,
         "required": false,
@@ -994,10 +941,14 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "eol_comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
