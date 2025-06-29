@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-gcode
 HOMEPAGE_URL := https://github.com/chocolatenao/tree-sitter-gcode.git
-VERSION := 0.1.1
+VERSION := 0.1.2
 
 # repository
 SRC_DIR := src

@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-gcode"
 description = "G-code grammar for tree-sitter"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["ChocolateNao <andrey12q112@gmail.com>"]
 license = "MIT"
 readme = "README.md"

@@ -65,7 +65,7 @@
     }
   ],
   "metadata": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "license": "MIT",
     "description": "G-code grammar for tree-sitter",
     "authors": [
